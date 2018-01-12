@@ -11,7 +11,7 @@ namespace marlib {
 
   template <typename ValueT, typename RangeT, typename MatrixT>
   dense_matrix<ValueT,RangeT>& mexp_pade(const trans_t& trans,
-    const MatrixT& MA, dense_matrix<ValueT,RangeT>& ME, const ValueT& eps);
+    const MatrixT& MA, const ValueT& t, dense_matrix<ValueT,RangeT>& ME, const ValueT& eps);
 
   template <typename ValueT, typename RangeT, typename MatrixT, typename VectorT>
   VectorT& mexp_unif(const trans_t& trans, const MatrixT& P, const ValueT& qv,
