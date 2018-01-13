@@ -22,7 +22,7 @@ namespace marlib {
     using RangeType = RangeT;
 
     csr_matrix(size_type row, size_type col, size_type nnz,
-      const RangeT* rowptr, const RangeT* colind, ValueT* value);
+      RangeT* rowptr, RangeT* colind, ValueT* value);
     csr_matrix(const csr_matrix<ValueT,RangeT>& m);
     csr_matrix(const dense_matrix<ValueT,RangeT>& m);
     ~csr_matrix();

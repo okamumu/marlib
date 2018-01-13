@@ -26,6 +26,11 @@ namespace marlib {
   }
 
   template <typename ValueT, typename RangeT>
+  csr_matrix<ValueT,RangeT>::csr_matrix(size_type row, size_type col, size_type nnz,
+    RangeT* rowptr, RangeT* colind, ValueT* value)
+  : m_row(row), m_col(col), m_nnz(nnz), m_rowptr(row+1,rowptr), m_colind(nnz,colind), m_value(nnz,value) { }
+
+  template <typename ValueT, typename RangeT>
   csr_matrix<ValueT,RangeT>::~csr_matrix() { }
 
   template <typename ValueT, typename RangeT>
