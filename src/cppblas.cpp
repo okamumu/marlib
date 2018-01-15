@@ -160,6 +160,37 @@ namespace marlib {
     return std::sqrt(ddot(x,x));
   }
 
+  // dsum
+
+  template <typename ValueT, typename RangeT>
+  ValueT dsum(const vector<ValueT,RangeT>& x) {
+    ValueT tmp = 0;
+    for (RangeT i=x.begin(); i<=x.end(); i++) {
+      tmp += x(i);
+    }
+    return tmp;
+  }
+
+  template <typename ValueT, typename RangeT>
+  ValueT dsum(const dense_matrix<ValueT,RangeT>& x) {
+    ValueT tmp = 0;
+    for (RangeT j=x.cbegin(); j<=x.cend(); j++) {
+      for (RangeT i=x.rbegin(); i<=x.rend(); i++) {
+        tmp += x(i,j);
+      }
+    }
+    return tmp;
+  }
+
+  template <typename ValueT, typename RangeT>
+  ValueT dsum(const csr_matrix<ValueT,RangeT>& x) {
+    ValueT tmp = 0;
+    for (size_type i=0; i<x.nnz(); i++) {
+      tmp += x.value(i);
+    }
+    return tmp;
+  }
+
   // dasum
 
   template <typename ValueT, typename RangeT>
@@ -648,6 +679,10 @@ namespace marlib {
   template double dnrm2(const vector<double,int>& x);
   template double dnrm2(const dense_matrix<double,int>& x);
   template double dnrm2(const csr_matrix<double,int>& x);
+
+  template double dsum(const vector<double,int>& x);
+  template double dsum(const dense_matrix<double,int>& x);
+  template double dsum(const csr_matrix<double,int>& x);
 
   template double dasum(const vector<double,int>& x);
   template double dasum(const dense_matrix<double,int>& x);

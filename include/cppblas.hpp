@@ -33,6 +33,13 @@ namespace marlib {
   ValueT dnrm2(const csr_matrix<ValueT,RangeT>& x);
 
   template <typename ValueT, typename RangeT>
+  ValueT dsum(const vector<ValueT,RangeT>& x);
+  template <typename ValueT, typename RangeT>
+  ValueT dsum(const dense_matrix<ValueT,RangeT>& x);
+  template <typename ValueT, typename RangeT>
+  ValueT dsum(const csr_matrix<ValueT,RangeT>& x);
+
+  template <typename ValueT, typename RangeT>
   ValueT dasum(const vector<ValueT,RangeT>& x);
   template <typename ValueT, typename RangeT>
   ValueT dasum(const dense_matrix<ValueT,RangeT>& x);
