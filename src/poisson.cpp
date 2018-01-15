@@ -61,13 +61,13 @@ namespace marlib {
 
 	template <typename ValueT, typename RangeT>
 	void poisson<ValueT,RangeT>::set(const ValueT& lambda, const RangeT& left, const RangeT& right) {
-		if (m_lambda != lambda) {
+		// if (m_lambda != lambda) {
 			m_lambda = lambda;
 			m_left = left;
 			m_right = right;
 			assert(m_prob.size() >= m_right - m_left + 1);
 			m_weight = set_prob();
-		}
+		// }
 	}
 
 	/*
