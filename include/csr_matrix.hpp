@@ -18,18 +18,20 @@ namespace marlib {
   template <typename ValueT, typename RangeT>
   class csr_matrix {
   public:
+    static const RangeT default_origin;
     using ValueType = ValueT;
     using RangeType = RangeT;
 
     csr_matrix(size_type row, size_type col, size_type nnz,
-      RangeT* rowptr, RangeT* colind, ValueT* value);
+      RangeT* rowptr, RangeT* colind, ValueT* value, const RangeT& origin = default_origin);
+    csr_matrix(const dense_matrix<ValueT,RangeT>& m, const RangeT& origin = default_origin);
     csr_matrix(const csr_matrix<ValueT,RangeT>& m);
-    csr_matrix(const dense_matrix<ValueT,RangeT>& m);
     ~csr_matrix();
 
   private:
     csr_matrix(const range<RangeT>& row, const range<RangeT>& col,
-      size_type nnz, const array<RangeT>& rowptr, const array<RangeT>& colind, const array<ValueT>& value);
+      size_type nnz, const array<RangeT>& rowptr, const array<RangeT>& colind, const array<ValueT>& value,
+      const RangeT& origin);
 
     range<RangeT> m_row;
     range<RangeT> m_col;

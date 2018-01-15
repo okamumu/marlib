@@ -11,9 +11,9 @@ namespace marlib {
   template <typename T>
   class range {
   public:
-    static const T origin = 0;
+    static const T default_origin = 1;
 
-    range(const T& size) : m_begin(origin), m_end(size-1+origin) {}
+    range(const T& size) : m_begin(default_origin), m_end(size-1+default_origin) {}
     range(const T& begin, const T& end) : m_begin(begin), m_end(end) {}
     range(const range<T>& r) : m_begin(r.m_begin), m_end(r.m_end) {}
     ~range() {}

@@ -7,11 +7,23 @@
 #include "marlib.hpp"
 
 namespace marlib {
+
+  template <typename ValueT, typename RangeT>
+  const RangeT csr_matrix<ValueT,RangeT>::default_origin = range<RangeT>::default_origin;
+
   template <typename ValueT, typename RangeT>
   csr_matrix<ValueT,RangeT>::csr_matrix(const range<RangeT>& row, const range<RangeT>& col,
-    size_type nnz, const array<RangeT>& rowptr, const array<RangeT>& colind, const array<ValueT>& value)
+    size_type nnz, const array<RangeT>& rowptr, const array<RangeT>& colind, const array<ValueT>& value,
+    const RangeT& origin)
   : m_row(row), m_col(col), m_nnz(nnz), m_rowptr(rowptr), m_colind(colind), m_value(value),
-  m_origin(range<RangeT>::origin) {}
+  m_origin(origin) {}
+
+  template <typename ValueT, typename RangeT>
+  csr_matrix<ValueT,RangeT>::csr_matrix(const dense_matrix<ValueT,RangeT>& m, const RangeT& origin)
+  : m_row(m.nrow()), m_col(m.ncol()), m_nnz(m.nnz()), m_rowptr(m.nrow()+1), m_colind(m_nnz), m_value(m_nnz),
+  m_origin(origin) {
+    copyfrom(m);
+  }
 
   template <typename ValueT, typename RangeT>
   csr_matrix<ValueT,RangeT>::csr_matrix(const csr_matrix<ValueT,RangeT>& m)
@@ -19,16 +31,9 @@ namespace marlib {
   m_origin(m.m_origin) {}
 
   template <typename ValueT, typename RangeT>
-  csr_matrix<ValueT,RangeT>::csr_matrix(const dense_matrix<ValueT,RangeT>& m)
-  : m_row(m.nrow()), m_col(m.ncol()), m_nnz(m.nnz()), m_rowptr(m.nrow()+1), m_colind(m_nnz), m_value(m_nnz),
-  m_origin(range<RangeT>::origin) {
-    copyfrom(m);
-  }
-
-  template <typename ValueT, typename RangeT>
   csr_matrix<ValueT,RangeT>::csr_matrix(size_type row, size_type col, size_type nnz,
-    RangeT* rowptr, RangeT* colind, ValueT* value)
-  : m_row(row), m_col(col), m_nnz(nnz), m_rowptr(row+1,rowptr), m_colind(nnz,colind), m_value(nnz,value), m_origin(range<RangeT>::origin) { }
+    RangeT* rowptr, RangeT* colind, ValueT* value, const RangeT& origin)
+  : m_row(row), m_col(col), m_nnz(nnz), m_rowptr(row+1,rowptr), m_colind(nnz,colind), m_value(nnz,value), m_origin(origin) { }
 
   template <typename ValueT, typename RangeT>
   csr_matrix<ValueT,RangeT>::~csr_matrix() { }
@@ -120,7 +125,7 @@ namespace marlib {
 
   template <typename ValueT, typename RangeT>
   csr_matrix<ValueT,RangeT> csr_matrix<ValueT,RangeT>::clone() const {
-    csr_matrix<ValueT,RangeT> tmp(m_row, m_col, m_nnz, m_rowptr, m_colind, array<ValueT>(m_value.size()));
+    csr_matrix<ValueT,RangeT> tmp(m_row, m_col, m_nnz, m_rowptr, m_colind, array<ValueT>(m_value.size()), m_origin);
     tmp = *this;
     return tmp;
   }
