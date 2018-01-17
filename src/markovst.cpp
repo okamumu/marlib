@@ -48,39 +48,4 @@ namespace marlib {
   template vector<double,int>& gth(const dense_matrix<double,int>& Q, vector<double,int>& x);
   template vector<double,int>& gth(const csr_matrix<double,int>& Q, vector<double,int>& x);
 
-  template <typename ValueT, typename RangeT, typename MatrixT, typename ConfigT>
-  vector<ValueT,RangeT>& stgs(const MatrixT& Q, vector<ValueT,RangeT>& x, ConfigT& conf) {
-    size_type n = Q.nrow();
-    vector<ValueT,RangeT> prevx(n);
-    vector<ValueT,RangeT> b(n);
-    b = 0;
-
-    conf.iter = 0;
-    while(true) {
-      prevx = x;
-      for (size_type k=0; k<conf.steps; k++) {
-        gsstep(Trans, ValueT(1), Q, ValueT(0), ValueT(1), b, x);
-        x /= dasum(x);
-      }
-      conf.iter += conf.steps;
-      prevx -= x;
-      conf.aerror = damax(prevx);
-      conf.rerror = conf.aerror / damax(x);
-
-      conf.callback(x);
-
-      if (conf.rerror < conf.rtol && conf.aerror < conf.atol) {
-        conf.info = 0; // convergence
-        break;
-      }
-
-      if (conf.iter >= conf.maxiter) {
-        conf.info = 1; // maxiter
-        break;
-      }
-    }
-    return x;
-  }
-
-  template vector<double,int>& stgs(const dense_matrix<double,int>& Q, vector<double,int>& xinit, gsconf<double,vector<double,int>>& conf);
 }
