@@ -15,6 +15,7 @@
 #include "gaussinte.hpp"
 #include "poisson.hpp"
 #include "gsstep.hpp"
+#include "mpow.hpp"
 #include "mexp.hpp"
 #include "markovst.hpp"
 #include "phase.hpp"

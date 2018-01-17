@@ -1,10 +1,3 @@
-/*
-! Description: matrix power
-!
-!        ME = MA^m
-!
-*/
-
 
 #include <cmath>
 
