@@ -31,10 +31,10 @@ namespace marlib {
   */
 
   template <typename ValueT, typename RangeT>
-  void gsstep_impl(const trans_t& trans, const ValueT& alpha,
+  void gsstep_impl(const trans_t& trans, const ValueT alpha,
     dense_matrix<ValueT,RangeT> A,
-    const ValueT& sigma,
-    const ValueT& omega,
+    const ValueT sigma,
+    const ValueT omega,
     dense_matrix<ValueT,RangeT> b, dense_matrix<ValueT,RangeT> x) {
     assert(A.nrow() == A.ncol());
     assert(b.ncol() == x.ncol());
@@ -98,10 +98,10 @@ namespace marlib {
   }
 
   template <typename ValueT, typename RangeT>
-  void gsstep_impl(const trans_t& trans, const ValueT& alpha,
+  void gsstep_impl(const trans_t& trans, const ValueT alpha,
     const csr_matrix<ValueT, RangeT>& A,
-    const ValueT& sigma,
-    const ValueT& omega,
+    const ValueT sigma,
+    const ValueT omega,
     dense_matrix<ValueT,RangeT> b, dense_matrix<ValueT,RangeT> x) {
     assert(A.nrow() == A.ncol());
     assert(b.ncol() == x.ncol());
@@ -176,13 +176,13 @@ namespace marlib {
     }
   }
 
-  template void gsstep_impl(const trans_t& trans, const double& alpha,
+  template void gsstep_impl(const trans_t& trans, const double alpha,
     dense_matrix<double,int> A,
-    const double& sigma, const double& omega,
+    const double sigma, const double omega,
     dense_matrix<double,int> b, dense_matrix<double,int> x);
 
-  template void gsstep_impl(const trans_t& trans, const double& alpha,
+  template void gsstep_impl(const trans_t& trans, const double alpha,
     const csr_matrix<double,int>& A,
-    const double& sigma, const double& omega,
+    const double sigma, const double omega,
     dense_matrix<double,int> b, dense_matrix<double,int> x);
 }

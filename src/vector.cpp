@@ -11,31 +11,31 @@ namespace marlib {
 
   template <typename ValueT, typename RangeT>
   vector<ValueT,RangeT>::vector(size_type size, const array<ValueT>& a, size_type inc)
-  : m_range(size), m_elem(a), m_inc(inc) {}
+  : m_range(size), m_value(a), m_inc(inc) {}
 
   template <typename ValueT, typename RangeT>
   vector<ValueT,RangeT>::vector(const range<RangeT>& r, const array<ValueT>& a, size_type inc)
-  : m_range(r), m_elem(a), m_inc(inc) {}
+  : m_range(r), m_value(a), m_inc(inc) {}
 
   template <typename ValueT, typename RangeT>
   vector<ValueT,RangeT>::vector(const vector<ValueT,RangeT>& v)
-  : m_range(v.m_range), m_elem(v.m_elem), m_inc(v.m_inc) {}
+  : m_range(v.m_range), m_value(v.m_value), m_inc(v.m_inc) {}
 
   template <typename ValueT, typename RangeT>
   vector<ValueT,RangeT>::vector(const vector<ValueT,RangeT>& v, ValueT* p)
-  : m_range(v.m_range), m_elem(v.m_elem.size(),p), m_inc(v.m_inc) {}
+  : m_range(v.m_range), m_value(v.m_value.size(),p), m_inc(v.m_inc) {}
 
   template <typename ValueT, typename RangeT>
   vector<ValueT,RangeT>::vector(size_type size)
-  : m_range(size), m_elem(size), m_inc(1) {}
+  : m_range(size), m_value(size), m_inc(1) {}
 
   template <typename ValueT, typename RangeT>
   vector<ValueT,RangeT>::vector(size_type size, ValueT* v, size_type inc)
-  : m_range(size), m_elem(size*inc,v), m_inc(inc) {}
+  : m_range(size), m_value(size*inc,v), m_inc(inc) {}
 
   template <typename ValueT, typename RangeT>
   vector<ValueT,RangeT>::vector(std::initializer_list<ValueT> v)
-  : m_range(v.size()), m_elem(v.size()), m_inc(1) {
+  : m_range(v.size()), m_value(v.size()), m_inc(1) {
     copyfrom(v.begin());
   }
 
@@ -43,13 +43,13 @@ namespace marlib {
   vector<ValueT,RangeT>::~vector() { }
 
   // template <typename ValueT, typename RangeT>
-  // ValueT& vector<ValueT,RangeT>::operator()(const RangeT& i) {
-  //   return m_elem[(i - m_range.begin()) * m_inc];
+  // ValueT vector<ValueT,RangeT>::operator()(const RangeT i) {
+  //   return m_value[(i - m_range.begin()) * m_inc];
   // }
   //
   // template <typename ValueT, typename RangeT>
-  // const ValueT& vector<ValueT,RangeT>::operator()(const RangeT& i) const {
-  //   return m_elem[(i - m_range.begin()) * m_inc];
+  // const ValueT vector<ValueT,RangeT>::operator()(const RangeT i) const {
+  //   return m_value[(i - m_range.begin()) * m_inc];
   // }
   //
   // template <typename ValueT, typename RangeT>
@@ -68,12 +68,12 @@ namespace marlib {
   // }
   //
   // template <typename ValueT, typename RangeT>
-  // const RangeT& vector<ValueT,RangeT>::begin() const {
+  // const RangeT vector<ValueT,RangeT>::begin() const {
   //   return m_range.begin();
   // }
   //
   // template <typename ValueT, typename RangeT>
-  // const RangeT& vector<ValueT,RangeT>::end() const {
+  // const RangeT vector<ValueT,RangeT>::end() const {
   //   return m_range.end();
   // }
   //
@@ -84,7 +84,7 @@ namespace marlib {
   //
   // template <typename ValueT, typename RangeT>
   // const array<ValueT>& vector<ValueT,RangeT>::value() const {
-  //   return m_elem;
+  //   return m_value;
   // }
   //
   // template <typename ValueT, typename RangeT>
@@ -95,19 +95,26 @@ namespace marlib {
 
   template <typename ValueT, typename RangeT>
   vector<ValueT,RangeT> vector<ValueT,RangeT>::operator()(const range<RangeT>& r) {
-    array<ValueT> tmp = m_elem.subarray((r.begin() - m_range.begin()) * m_inc);
+    array<ValueT> tmp = m_value.subarray((r.begin() - m_range.begin()) * m_inc);
     return vector<ValueT,RangeT>(range<RangeT>(r.size()), tmp, m_inc);
   }
 
   template <typename ValueT, typename RangeT>
   const vector<ValueT,RangeT> vector<ValueT,RangeT>::operator()(const range<RangeT>& r) const {
-    array<ValueT> tmp = m_elem.subarray((r.begin() - m_range.begin()) * m_inc);
+    array<ValueT> tmp = m_value.subarray((r.begin() - m_range.begin()) * m_inc);
     return vector<ValueT,RangeT>(range<RangeT>(r.size()), tmp, m_inc);
   }
 
   template <typename ValueT, typename RangeT>
   vector<ValueT,RangeT> vector<ValueT,RangeT>::clone() const {
-    vector<ValueT,RangeT> tmp(m_range, array<ValueT>(m_range.size()*m_inc), m_inc);
+    vector<ValueT,RangeT> tmp(m_range, array<ValueT>(m_value.size()), m_inc);
+    tmp = *this;
+    return tmp;
+  }
+
+  template <typename ValueT, typename RangeT>
+  vector<ValueT,RangeT> vector<ValueT,RangeT>::clone(ValueT* p) const {
+    vector<ValueT,RangeT> tmp(m_range, array<ValueT>(m_value.size(), p), m_inc);
     tmp = *this;
     return tmp;
   }
@@ -309,7 +316,7 @@ namespace marlib {
 #endif
 
   template class vector<int,int>;
-  template class vector<size_type,int>;
+  // template class vector<size_type,int>;
   template class vector<double,int>;
 
 }

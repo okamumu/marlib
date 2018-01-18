@@ -28,6 +28,6 @@ namespace marlib {
   template <typename ValueT, typename RangeT, typename MatrixT>
   size_type arnoldi(const trans_t& trans, const MatrixT& A,
     const vector<ValueT,RangeT>& x, dense_matrix<ValueT,RangeT> H, dense_matrix<ValueT,RangeT> V,
-    ValueT& beta, ValueT& rnorm, const ValueT& tol, const size_type& ite);
+    ValueT& beta, ValueT& rnorm, ValueT tol, size_type ite);
 
 }

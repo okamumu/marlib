@@ -38,16 +38,16 @@ namespace marlib {
     size_type m_ld;
 
   public:
-    ValueT& operator()(const RangeT& i, const RangeT& j);
-    const ValueT& operator()(const RangeT& i, const RangeT& j) const;
+    ValueT& operator()(const RangeT i, const RangeT j);
+    const ValueT& operator()(const RangeT i, const RangeT j) const;
 
     ValueT* ptr();
     const ValueT* ptr() const;
 
-    const RangeT& rbegin() const;
-    const RangeT& rend() const;
-    const RangeT& cbegin() const;
-    const RangeT& cend() const;
+    const RangeT rbegin() const;
+    const RangeT rend() const;
+    const RangeT cbegin() const;
+    const RangeT cend() const;
 
     size_type nrow() const;
     size_type ncol() const;
@@ -58,16 +58,17 @@ namespace marlib {
     dense_matrix<ValueT,RangeT> operator()(const range<RangeT>& row, const range<RangeT>& col);
     const dense_matrix<ValueT,RangeT> operator()(const range<RangeT>& row, const range<RangeT>& col) const;
 
-    vector<ValueT,RangeT> operator()(const RangeT& row, const range<RangeT>& col);
-    const vector<ValueT,RangeT> operator()(const RangeT& row, const range<RangeT>& col) const;
-    vector<ValueT,RangeT> operator()(const range<RangeT>& row, const RangeT& col);
-    const vector<ValueT,RangeT> operator()(const range<RangeT>& row, const RangeT& col) const;
+    vector<ValueT,RangeT> operator()(const RangeT row, const range<RangeT>& col);
+    const vector<ValueT,RangeT> operator()(const RangeT row, const range<RangeT>& col) const;
+    vector<ValueT,RangeT> operator()(const range<RangeT>& row, const RangeT col);
+    const vector<ValueT,RangeT> operator()(const range<RangeT>& row, const RangeT col) const;
 
     array<ValueT>& value();
     const array<ValueT>& value() const;
 
     void set_range(const range<RangeT>& row, const range<RangeT>& col);
     dense_matrix<ValueT,RangeT> clone() const;
+    dense_matrix<ValueT,RangeT> clone(ValueT* p) const;
 
     // equal
     dense_matrix<ValueT,RangeT>& operator=(const ValueT& v);
@@ -107,7 +108,7 @@ namespace marlib {
 
     const vector<ValueT,RangeT> diag() const;
     vector<ValueT,RangeT> diag();
-    vector<ValueT*,RangeT>& diag(vector<ValueT*,RangeT>& x, int offset, const RangeT& xindex);
+    vector<ValueT*,RangeT>& diag(vector<ValueT*,RangeT>& x, int offset, const RangeT xindex);
     dense_matrix<ValueT,RangeT>& eye();
     dense_matrix<ValueT,RangeT> tr() const;
 
@@ -118,14 +119,14 @@ namespace marlib {
   };
 
   template <typename ValueT, typename RangeT>
-  inline ValueT& dense_matrix<ValueT,RangeT>::operator()(const RangeT& i, const RangeT& j) {
+  inline ValueT& dense_matrix<ValueT,RangeT>::operator()(const RangeT i, const RangeT j) {
     const RangeT x = i - m_row.begin();
     const RangeT y = j - m_col.begin();
     return m_value[x + y * m_ld];
   }
 
   template <typename ValueT, typename RangeT>
-  inline const ValueT& dense_matrix<ValueT,RangeT>::operator()(const RangeT& i, const RangeT& j) const {
+  inline const ValueT& dense_matrix<ValueT,RangeT>::operator()(const RangeT i, const RangeT j) const {
     const RangeT x = i - m_row.begin();
     const RangeT y = j - m_col.begin();
     return m_value[x + y * m_ld];
@@ -147,22 +148,22 @@ namespace marlib {
   }
 
   template <typename ValueT, typename RangeT>
-  inline const RangeT& dense_matrix<ValueT,RangeT>::rbegin() const {
+  inline const RangeT dense_matrix<ValueT,RangeT>::rbegin() const {
     return m_row.begin();
   }
 
   template <typename ValueT, typename RangeT>
-  inline const RangeT& dense_matrix<ValueT,RangeT>::rend() const {
+  inline const RangeT dense_matrix<ValueT,RangeT>::rend() const {
     return m_row.end();
   }
 
   template <typename ValueT, typename RangeT>
-  inline const RangeT& dense_matrix<ValueT,RangeT>::cbegin() const {
+  inline const RangeT dense_matrix<ValueT,RangeT>::cbegin() const {
     return m_col.begin();
   }
 
   template <typename ValueT, typename RangeT>
-  inline const RangeT& dense_matrix<ValueT,RangeT>::cend() const {
+  inline const RangeT dense_matrix<ValueT,RangeT>::cend() const {
     return m_col.end();
   }
 

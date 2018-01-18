@@ -7,7 +7,7 @@ namespace marlib {
 
   template <typename ValueT, typename RangeT, typename MatrixT>
   dense_matrix<ValueT,RangeT>& mexp_pade(const trans_t& trans,
-    const MatrixT& MA, const ValueT& t, dense_matrix<ValueT,RangeT>& ME, const ValueT& eps) {
+    const MatrixT& MA, const ValueT t, dense_matrix<ValueT,RangeT>& ME, const ValueT eps) {
     size_type n = MA.nrow();
 
     ME = MA;
@@ -53,8 +53,8 @@ namespace marlib {
   }
 
   template dense_matrix<double,int>& mexp_pade(const trans_t& trans,
-    const dense_matrix<double,int>& MA, const double& t, dense_matrix<double,int>& ME, const double& eps);
+    const dense_matrix<double,int>& MA, const double t, dense_matrix<double,int>& ME, const double eps);
   template dense_matrix<double,int>& mexp_pade(const trans_t& trans,
-    const csr_matrix<double,int>& MA, const double& t, dense_matrix<double,int>& ME, const double& eps);
+    const csr_matrix<double,int>& MA, const double t, dense_matrix<double,int>& ME, const double eps);
 
 }

@@ -81,7 +81,7 @@ namespace marlib {
   };
 
   template <typename ValueT, typename IntegerT>
-  ValueT lgamma(const ValueT& xinit) {
+  ValueT lgamma(const ValueT xinit) {
     ValueT x = xinit;
     ValueT v = 1;
     while (x < gamma<ValueT,IntegerT>::N) { v *=x; x++; }
@@ -94,7 +94,7 @@ namespace marlib {
   }
 
   template <typename ValueT, typename IntegerT>
-  ValueT tgamma(const ValueT& x) {
+  ValueT tgamma(const ValueT x) {
     if (x < 0) {
       return gamma<ValueT,IntegerT>::PI / (sin(gamma<ValueT,IntegerT>::PI * x) * exp(lgamma<ValueT,IntegerT>(1-x)));
     }
@@ -102,7 +102,7 @@ namespace marlib {
   }
 
   template <typename ValueT, typename IntegerT>
-  ValueT psi(const ValueT& xinit) {
+  ValueT psi(const ValueT xinit) {
     ValueT x = xinit;
     ValueT v = 0;
     while (x < gamma<ValueT,IntegerT>::N) { v += 1 / x; x++; }
@@ -115,7 +115,7 @@ namespace marlib {
   }
 
   template <typename ValueT, typename IntegerT>
-  ValueT polygamma(const IntegerT& n, const ValueT& xinit) {
+  ValueT polygamma(const IntegerT n, const ValueT xinit) {
     ValueT x = xinit;
     ValueT u = 1;
     for(IntegerT k=1-n; k<0; k++) u *= k;
@@ -136,7 +136,7 @@ namespace marlib {
   }
 
   template <typename ValueT, typename IntegerT>
-  ValueT tfact(const IntegerT& s) {
+  ValueT tfact(const IntegerT s) {
     if (s <= gamma<ValueT,IntegerT>::FACTMAX) {
       return gamma<ValueT,IntegerT>::nfact[s];
     } else {
@@ -145,7 +145,7 @@ namespace marlib {
   }
 
   template <typename ValueT, typename IntegerT>
-  ValueT lfact(const IntegerT& s) {
+  ValueT lfact(const IntegerT s) {
     if (s <= gamma<ValueT,IntegerT>::FACTMAX) {
       return gamma<ValueT,IntegerT>::lognfact[s];
     } else {
@@ -154,11 +154,11 @@ namespace marlib {
   }
 
   template struct gamma<double,int>;
-  template double lgamma<double,int>(const double& x);
-  template double tgamma<double,int>(const double& x);
-  template double psi<double,int>(const double& x);
-  template double polygamma<double,int>(const int& n, const double& x);
-  template double tfact<double,int>(const int& s);
-  template double lfact<double,int>(const int& s);
+  template double lgamma<double,int>(const double x);
+  template double tgamma<double,int>(const double x);
+  template double psi<double,int>(const double x);
+  template double polygamma<double,int>(const int n, const double x);
+  template double tfact<double,int>(const int s);
+  template double lfact<double,int>(const int s);
 
 }

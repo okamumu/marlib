@@ -10,45 +10,45 @@ namespace marlib {
 
   template <typename ValueT, typename RangeT>
   vector<ValueT*,RangeT>::vector(size_type size, const array<ValueT*>& a, size_type inc)
-  : m_range(size), m_elem(a), m_inc(inc) {}
+  : m_range(size), m_value(a), m_inc(inc) {}
 
   template <typename ValueT, typename RangeT>
   vector<ValueT*,RangeT>::vector(const range<RangeT>& r, const array<ValueT*>& a, size_type inc)
-  : m_range(r), m_elem(a), m_inc(inc) {}
+  : m_range(r), m_value(a), m_inc(inc) {}
 
   template <typename ValueT, typename RangeT>
   vector<ValueT*,RangeT>::vector(const vector<ValueT*,RangeT>& v)
-  : m_range(v.m_range), m_elem(v.m_elem), m_inc(v.m_inc) {}
+  : m_range(v.m_range), m_value(v.m_value), m_inc(v.m_inc) {}
 
   template <typename ValueT, typename RangeT>
   vector<ValueT*,RangeT>::vector(size_type size)
-  : m_range(size), m_elem(size), m_inc(1) {}
+  : m_range(size), m_value(size), m_inc(1) {}
 
   template <typename ValueT, typename RangeT>
   vector<ValueT*,RangeT>::~vector() { }
 
   // template <typename ValueT, typename RangeT>
-  // ValueT*& vector<ValueT*,RangeT>::ptr(const RangeT& i) {
-  //   return m_elem.ptr((i - m_range.begin()) * m_inc);
+  // ValueT* vector<ValueT*,RangeT>::ptr(const RangeT i) {
+  //   return m_value.ptr((i - m_range.begin()) * m_inc);
   // }
   //
   // template <typename ValueT, typename RangeT>
-  // ValueT& vector<ValueT*,RangeT>::operator()(const RangeT& i) {
-  //   return m_elem[(i - m_range.begin()) * m_inc];
+  // ValueT vector<ValueT*,RangeT>::operator()(const RangeT i) {
+  //   return m_value[(i - m_range.begin()) * m_inc];
   // }
   //
   // template <typename ValueT, typename RangeT>
-  // const ValueT& vector<ValueT*,RangeT>::operator()(const RangeT& i) const {
-  //   return m_elem[(i - m_range.begin()) * m_inc];
+  // const ValueT vector<ValueT*,RangeT>::operator()(const RangeT i) const {
+  //   return m_value[(i - m_range.begin()) * m_inc];
   // }
   //
   // template <typename ValueT, typename RangeT>
-  // const RangeT& vector<ValueT*,RangeT>::begin() const {
+  // const RangeT vector<ValueT*,RangeT>::begin() const {
   //   return m_range.begin();
   // }
   //
   // template <typename ValueT, typename RangeT>
-  // const RangeT& vector<ValueT*,RangeT>::end() const {
+  // const RangeT vector<ValueT*,RangeT>::end() const {
   //   return m_range.end();
   // }
   //
@@ -207,6 +207,6 @@ namespace marlib {
   }
 
   template class vector<int*,int>;
-  template class vector<size_type*,int>;
+  // template class vector<size_type*,int>;
   template class vector<double*,int>;
 }

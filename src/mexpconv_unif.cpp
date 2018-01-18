@@ -22,7 +22,7 @@ namespace marlib {
 
   template <typename ValueT, typename RangeT, typename MatrixT, typename VectorT>
   VectorT& mexpconv_unif(const trans_t& transQ, const trans_t& transH,
-  const MatrixT& P, const ValueT& qv, const poisson<ValueT,RangeT>& pois,
+  const MatrixT& P, const ValueT qv, const poisson<ValueT,RangeT>& pois,
   const VectorT& x, const VectorT& y, VectorT& z, MatrixT& H) {
 
     const RangeT left = pois.left();
@@ -72,13 +72,13 @@ namespace marlib {
 
   template
   vector<double,int>& mexpconv_unif(const trans_t& transQ, const trans_t& transH,
-  const dense_matrix<double,int>& P, const double& qv, const poisson<double,int>& pois,
+  const dense_matrix<double,int>& P, const double qv, const poisson<double,int>& pois,
   const vector<double,int>& x, const vector<double,int>& y, vector<double,int>& z,
   dense_matrix<double,int>& H);
 
   template
   vector<double,int>& mexpconv_unif(const trans_t& transQ, const trans_t& transH,
-  const csr_matrix<double,int>& P, const double& qv, const poisson<double,int>& pois,
+  const csr_matrix<double,int>& P, const double qv, const poisson<double,int>& pois,
   const vector<double,int>& x, const vector<double,int>& y, vector<double,int>& z,
   csr_matrix<double,int>& H);
 

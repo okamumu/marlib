@@ -12,11 +12,11 @@ namespace marlib {
   // BLAS level 1
 
   template <typename ValueT, typename RangeT>
-  vector<ValueT,RangeT>& daxpy(const ValueT& alpha, const vector<ValueT,RangeT>& x, vector<ValueT,RangeT>& y);
+  vector<ValueT,RangeT>& daxpy(const ValueT alpha, const vector<ValueT,RangeT>& x, vector<ValueT,RangeT>& y);
   template <typename ValueT, typename RangeT>
-  dense_matrix<ValueT,RangeT>& daxpy(const ValueT& alpha, const dense_matrix<ValueT,RangeT>& x, dense_matrix<ValueT,RangeT>& y);
+  dense_matrix<ValueT,RangeT>& daxpy(const ValueT alpha, const dense_matrix<ValueT,RangeT>& x, dense_matrix<ValueT,RangeT>& y);
   template <typename ValueT, typename RangeT>
-  csr_matrix<ValueT,RangeT>& daxpy(const ValueT& alpha, const csr_matrix<ValueT,RangeT>& x, csr_matrix<ValueT,RangeT>& y);
+  csr_matrix<ValueT,RangeT>& daxpy(const ValueT alpha, const csr_matrix<ValueT,RangeT>& x, csr_matrix<ValueT,RangeT>& y);
 
   template <typename ValueT, typename RangeT>
   ValueT ddot(const vector<ValueT,RangeT>& x, const vector<ValueT,RangeT>& y);
@@ -61,21 +61,21 @@ namespace marlib {
   // BLAS level 2
 
   template <typename ValueT, typename RangeT>
-  vector<ValueT,RangeT>& dgemv(const trans_t& trans, const ValueT& alpha,
+  vector<ValueT,RangeT>& dgemv(const trans_t& trans, const ValueT alpha,
     const dense_matrix<ValueT,RangeT>& A, const vector<ValueT,RangeT>& x,
-    const ValueT& beta, vector<ValueT,RangeT>& y);
+    const ValueT beta, vector<ValueT,RangeT>& y);
   template <typename ValueT, typename RangeT>
-  vector<ValueT,RangeT>& dgemv(const trans_t& trans, const ValueT& alpha,
+  vector<ValueT,RangeT>& dgemv(const trans_t& trans, const ValueT alpha,
     const csr_matrix<ValueT,RangeT>& A, const vector<ValueT,RangeT>& x,
-    const ValueT& beta, vector<ValueT,RangeT>& y);
+    const ValueT beta, vector<ValueT,RangeT>& y);
 
   template <typename ValueT, typename RangeT>
   dense_matrix<ValueT,RangeT>& dger(const trans_t& trans,
-    const ValueT& alpha, const vector<ValueT,RangeT>& x, const vector<ValueT,RangeT>& y,
+    const ValueT alpha, const vector<ValueT,RangeT>& x, const vector<ValueT,RangeT>& y,
     dense_matrix<ValueT,RangeT>& A);
   template <typename ValueT, typename RangeT>
   csr_matrix<ValueT,RangeT>& dger(const trans_t& trans,
-    const ValueT& alpha, const vector<ValueT,RangeT>& x, const vector<ValueT,RangeT>& y,
+    const ValueT alpha, const vector<ValueT,RangeT>& x, const vector<ValueT,RangeT>& y,
     csr_matrix<ValueT,RangeT>& A);
 
   // BLAS level 3
@@ -84,20 +84,20 @@ namespace marlib {
   dense_matrix<ValueT,RangeT>& dgemm(
     const trans_t& transA,
     const trans_t& transB,
-    const ValueT& alpha,
+    const ValueT alpha,
     const dense_matrix<ValueT,RangeT>& A,
     const dense_matrix<ValueT,RangeT>& B,
-    const ValueT& beta,
+    const ValueT beta,
     dense_matrix<ValueT,RangeT>& C);
 
   template <typename ValueT, typename RangeT>
   dense_matrix<ValueT,RangeT>& dgemm(
     const trans_t& transA,
     const trans_t& transB,
-    const ValueT& alpha,
+    const ValueT alpha,
     const csr_matrix<ValueT,RangeT>& A,
     const dense_matrix<ValueT,RangeT>& B,
-    const ValueT& beta,
+    const ValueT beta,
     dense_matrix<ValueT,RangeT>& C);
 
   // dgemm for vector
@@ -106,10 +106,10 @@ namespace marlib {
   vector<ValueT,RangeT>& dgemm(
     const trans_t& transA,
     const trans_t& transB,
-    const ValueT& alpha,
+    const ValueT alpha,
     const dense_matrix<ValueT,RangeT>& A,
     const vector<ValueT,RangeT>& B,
-    const ValueT& beta,
+    const ValueT beta,
     vector<ValueT,RangeT>& C) {
     return dgemv<ValueT,RangeT>(transA, alpha, A, B, beta, C);
   }
@@ -118,10 +118,10 @@ namespace marlib {
   vector<ValueT,RangeT>& dgemm(
     const trans_t& transA,
     const trans_t& transB,
-    const ValueT& alpha,
+    const ValueT alpha,
     const csr_matrix<ValueT,RangeT>& A,
     const vector<ValueT,RangeT>& B,
-    const ValueT& beta,
+    const ValueT beta,
     vector<ValueT,RangeT>& C) {
     return dgemv<ValueT,RangeT>(transA, alpha, A, B, beta, C);
   }

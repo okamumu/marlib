@@ -12,9 +12,9 @@
 namespace marlib {
 
   template <typename ValueT, typename RangeT, typename MatrixT, typename VectorT>
-  VectorT& mexp_unif(const trans_t& trans, const MatrixT& P, const ValueT& qv,
+  VectorT& mexp_unif(const trans_t& trans, const MatrixT& P, const ValueT qv,
   const poisson<ValueT,RangeT>& pois, const VectorT& x, VectorT& y,
-  const ValueT& atol) {
+  const ValueT atol) {
     VectorT xi = x.clone();
     VectorT tmp = x.clone();
 
@@ -36,23 +36,23 @@ namespace marlib {
 
   template dense_matrix<double,int>& mexp_unif(const trans_t& trans,
     const dense_matrix<double,int>& P,
-    const double& qv, const poisson<double,int>& pois,
-    const dense_matrix<double,int>& x, dense_matrix<double,int>& y, const double& atol);
+    const double qv, const poisson<double,int>& pois,
+    const dense_matrix<double,int>& x, dense_matrix<double,int>& y, const double atol);
 
   template vector<double,int>& mexp_unif(const trans_t& trans,
     const dense_matrix<double,int>& P,
-    const double& qv, const poisson<double,int>& pois,
-    const vector<double,int>& x, vector<double,int>& y, const double& atol);
+    const double qv, const poisson<double,int>& pois,
+    const vector<double,int>& x, vector<double,int>& y, const double atol);
 
   // csr
 
   template dense_matrix<double,int>& mexp_unif(const trans_t& trans,
     const csr_matrix<double,int>& P,
-    const double& qv, const poisson<double,int>& pois,
-    const dense_matrix<double,int>& x, dense_matrix<double,int>& y, const double& atol);
+    const double qv, const poisson<double,int>& pois,
+    const dense_matrix<double,int>& x, dense_matrix<double,int>& y, const double atol);
 
   template vector<double,int>& mexp_unif(const trans_t& trans,
     const csr_matrix<double,int>& P,
-    const double& qv, const poisson<double,int>& pois,
-    const vector<double,int>& x, vector<double,int>& y, const double& atol);
+    const double qv, const poisson<double,int>& pois,
+    const vector<double,int>& x, vector<double,int>& y, const double atol);
 }

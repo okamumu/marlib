@@ -22,23 +22,22 @@ namespace marlib {
 		static constexpr RangeT POISSON_RIGHT_MAX = 23;
 
 	public:
-		poisson(const ValueT& lambda, const ValueT& eps);
-    poisson(const RangeT& minleft, const RangeT& maxright);
-		// poisson(const ValueT& lambda, const ValueT& eps, array<ValueT>& prob);
+		poisson(const ValueT lambda, const ValueT eps);
+    poisson(const RangeT minleft, const RangeT maxright);
 		~poisson();
 
-		const RangeT& left() const;
-		const RangeT& right() const;
+		const RangeT left() const;
+		const RangeT right() const;
 		array<ValueT>& get_prob();
-		const ValueT& weight() const;
-    const ValueT& lambda() const;
+		const ValueT weight() const;
+    const ValueT lambda() const;
 
-		const ValueT& operator()(const RangeT& i) const;
+		const ValueT operator()(const RangeT i) const;
 
-    static RangeT rightbound(const ValueT& lambda, const ValueT& eps);
+    static RangeT rightbound(const ValueT lambda, const ValueT eps);
 
-		void set(const ValueT& lambda, const ValueT& eps);
-    void set(const ValueT& lambda, const RangeT& left, const RangeT& right);
+		void set(const ValueT lambda, const ValueT eps);
+    void set(const ValueT lambda, const RangeT left, const RangeT right);
 
 	private:
 		ValueT m_lambda;
@@ -47,19 +46,19 @@ namespace marlib {
 		array<ValueT> m_prob;
 		ValueT m_weight;
 
-		static ValueT normalt(const ValueT& x);
-		static ValueT normalq(const ValueT& p);
+		static ValueT normalt(const ValueT x);
+		static ValueT normalq(const ValueT p);
 		ValueT set_prob();
 
 	};
 
   template <typename ValueT, typename RangeT>
-	inline const RangeT& poisson<ValueT,RangeT>::left() const {
+	inline const RangeT poisson<ValueT,RangeT>::left() const {
 		return m_left;
 	}
 
 	template <typename ValueT, typename RangeT>
-	inline const RangeT& poisson<ValueT,RangeT>::right() const {
+	inline const RangeT poisson<ValueT,RangeT>::right() const {
 		return m_right;
 	}
 
@@ -69,17 +68,17 @@ namespace marlib {
 	}
 
 	template <typename ValueT, typename RangeT>
-	inline const ValueT& poisson<ValueT,RangeT>::weight() const {
+	inline const ValueT poisson<ValueT,RangeT>::weight() const {
 		return m_weight;
 	}
 
 	template <typename ValueT, typename RangeT>
-	inline const ValueT& poisson<ValueT,RangeT>::lambda() const {
+	inline const ValueT poisson<ValueT,RangeT>::lambda() const {
 		return m_lambda;
 	}
 
 	template <typename ValueT, typename RangeT>
-	inline const ValueT& poisson<ValueT,RangeT>::operator()(const RangeT& i) const {
+	inline const ValueT poisson<ValueT,RangeT>::operator()(const RangeT i) const {
 		return m_prob[i - m_left];
 	}
 }

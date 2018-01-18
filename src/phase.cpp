@@ -482,7 +482,7 @@ namespace marlib {
   }
 
   template <typename ValueT, typename RangeT>
-  void cf1_swap(const RangeT& i, const RangeT& j, vector<ValueT,RangeT>& alpha,
+  void cf1_swap(const RangeT i, const RangeT j, vector<ValueT,RangeT>& alpha,
     vector<ValueT*,RangeT>& rate, vector<ValueT*,RangeT>& diag) {
     assert(alpha.begin() == rate.begin() && alpha.begin() == diag.begin());
     ValueT tmp;

@@ -16,7 +16,7 @@ namespace marlib {
   // daxpy
 
   template <typename ValueT, typename RangeT>
-  vector<ValueT,RangeT>& daxpy(const ValueT& alpha, const vector<ValueT,RangeT>& x, vector<ValueT,RangeT>& y) {
+  vector<ValueT,RangeT>& daxpy(const ValueT alpha, const vector<ValueT,RangeT>& x, vector<ValueT,RangeT>& y) {
     assert(x.size() == y.size());
     for (RangeT i=y.begin(), j=x.begin(); i<=y.end(); i++, j++) {
       y(i) += alpha * x(j);
@@ -25,7 +25,7 @@ namespace marlib {
   }
 
   template <typename ValueT, typename RangeT>
-  dense_matrix<ValueT,RangeT>& daxpy(const ValueT& alpha, const dense_matrix<ValueT,RangeT>& x,
+  dense_matrix<ValueT,RangeT>& daxpy(const ValueT alpha, const dense_matrix<ValueT,RangeT>& x,
     dense_matrix<ValueT,RangeT>& y) {
     assert(y.nrow() == x.nrow());
     assert(y.ncol() == x.ncol());
@@ -38,7 +38,7 @@ namespace marlib {
   }
 
   template <typename ValueT, typename RangeT>
-  csr_matrix<ValueT,RangeT>& daxpy(const ValueT& alpha, const csr_matrix<ValueT,RangeT>& x,
+  csr_matrix<ValueT,RangeT>& daxpy(const ValueT alpha, const csr_matrix<ValueT,RangeT>& x,
     csr_matrix<ValueT,RangeT>& y) {
     assert(y.nnz() == x.nnz());
     for (size_type i=0; i<x.nnz(); i++) {
@@ -49,14 +49,14 @@ namespace marlib {
 
 #ifdef F77BLAS
   template <>
-  vector<double,int>& daxpy(const double& alpha, const vector<double,int>& x, vector<double,int>& y) {
+  vector<double,int>& daxpy(const double alpha, const vector<double,int>& x, vector<double,int>& y) {
     assert(x.size() == y.size());
     dblas::daxpy(x.size(), alpha, x.ptr(), x.inc(), y.ptr(), y.inc());
     return y;
   }
 
   template <>
-  dense_matrix<double,int>& daxpy(const double& alpha, const dense_matrix<double,int>& x,
+  dense_matrix<double,int>& daxpy(const double alpha, const dense_matrix<double,int>& x,
     dense_matrix<double,int>& y) {
     assert(x.nrow() == y.nrow());
     assert(x.ncol() == y.ncol());
@@ -71,7 +71,7 @@ namespace marlib {
   }
 
   template <>
-  csr_matrix<double,int>& daxpy(const double& alpha, const csr_matrix<double,int>& x,
+  csr_matrix<double,int>& daxpy(const double alpha, const csr_matrix<double,int>& x,
     csr_matrix<double,int>& y) {
     assert(y.nnz() == x.nnz());
     dblas::daxpy(x.nnz(), alpha, &x.value(0), 1, &y.value(0), 1);
@@ -297,10 +297,10 @@ namespace marlib {
   template <typename ValueT, typename RangeT>
   vector<ValueT,RangeT>& dgemv(
     const trans_t& trans,
-    const ValueT& alpha,
+    const ValueT alpha,
     const dense_matrix<ValueT,RangeT>& A,
     const vector<ValueT,RangeT>& x,
-    const ValueT& beta,
+    const ValueT beta,
     vector<ValueT,RangeT>& y) {
 
     switch(trans) {
@@ -330,8 +330,8 @@ namespace marlib {
 
   template <typename ValueT, typename RangeT>
   vector<ValueT,RangeT>& dgemv(const trans_t& trans,
-    const ValueT& alpha, const csr_matrix<ValueT,RangeT>& A,
-    const vector<ValueT,RangeT>& x, const ValueT& beta, vector<ValueT,RangeT>& y) {
+    const ValueT alpha, const csr_matrix<ValueT,RangeT>& A,
+    const vector<ValueT,RangeT>& x, const ValueT beta, vector<ValueT,RangeT>& y) {
 
     switch (trans) {
       case NoTrans:
@@ -359,9 +359,9 @@ namespace marlib {
 #ifdef F77BLAS
   template <>
   vector<double,int>& dgemv(
-    const trans_t& trans, const double& alpha,
+    const trans_t& trans, const double alpha,
     const dense_matrix<double,int>& A,
-    const vector<double,int>& x, const double& beta, vector<double,int>& y) {
+    const vector<double,int>& x, const double beta, vector<double,int>& y) {
     dblas::dgemv(trans, A.nrow(), A.ncol(), alpha, A.ptr(), A.ld(),
       x.ptr(), x.inc(), beta, y.ptr(), y.inc());
     return y;
@@ -372,7 +372,7 @@ namespace marlib {
 
   template <typename ValueT, typename RangeT>
   dense_matrix<ValueT,RangeT>& dger(const trans_t& trans,
-    const ValueT& alpha, const vector<ValueT,RangeT>& x, const vector<ValueT,RangeT>& y,
+    const ValueT alpha, const vector<ValueT,RangeT>& x, const vector<ValueT,RangeT>& y,
     dense_matrix<ValueT,RangeT>& A) {
 
     switch (trans) {
@@ -400,7 +400,7 @@ namespace marlib {
 
   template <typename ValueT, typename RangeT>
   csr_matrix<ValueT,RangeT>& dger(const trans_t& trans,
-    const ValueT& alpha, const vector<ValueT,RangeT>& x, const vector<ValueT,RangeT>& y,
+    const ValueT alpha, const vector<ValueT,RangeT>& x, const vector<ValueT,RangeT>& y,
     csr_matrix<ValueT,RangeT>& A) {
 
     switch (trans) {
@@ -434,7 +434,7 @@ namespace marlib {
   template <>
   dense_matrix<double,int>& dger(
     const trans_t& trans,
-    const double& alpha, const vector<double,int>& x, const vector<double,int>& y,
+    const double alpha, const vector<double,int>& x, const vector<double,int>& y,
     dense_matrix<double,int>& A) {
     switch (trans) {
       case NoTrans:
@@ -456,10 +456,10 @@ namespace marlib {
   dense_matrix<ValueT,RangeT>& dgemm(
     const trans_t& transA,
     const trans_t& transB,
-    const ValueT& alpha,
+    const ValueT alpha,
     const dense_matrix<ValueT,RangeT>& A,
     const dense_matrix<ValueT,RangeT>& B,
-    const ValueT& beta,
+    const ValueT beta,
     dense_matrix<ValueT,RangeT>& C) {
 
     switch (transA) {
@@ -535,10 +535,10 @@ namespace marlib {
   dense_matrix<ValueT,RangeT>& dgemm(
     const trans_t& transA,
     const trans_t& transB,
-    const ValueT& alpha,
+    const ValueT alpha,
     const csr_matrix<ValueT,RangeT>& A,
     const dense_matrix<ValueT,RangeT>& B,
-    const ValueT& beta,
+    const ValueT beta,
     dense_matrix<ValueT,RangeT>& C) {
 
     switch (transB) {
@@ -603,10 +603,10 @@ namespace marlib {
   dense_matrix<double,int>& dgemm(
     const trans_t& transA,
     const trans_t& transB,
-    const double& alpha,
+    const double alpha,
     const dense_matrix<double,int>& A,
     const dense_matrix<double,int>& B,
-    const double& beta,
+    const double beta,
     dense_matrix<double,int>& C) {
       switch (transA) {
         case NoTrans:
@@ -668,9 +668,9 @@ namespace marlib {
 #endif
 
   // instance
-  template vector<double,int>& daxpy(const double& alpha, const vector<double,int>& x, vector<double,int>& y);
-  template dense_matrix<double,int>& daxpy(const double& alpha, const dense_matrix<double,int>& x, dense_matrix<double,int>& y);
-  template csr_matrix<double,int>& daxpy(const double& alpha, const csr_matrix<double,int>& x, csr_matrix<double,int>& y);
+  template vector<double,int>& daxpy(const double alpha, const vector<double,int>& x, vector<double,int>& y);
+  template dense_matrix<double,int>& daxpy(const double alpha, const dense_matrix<double,int>& x, dense_matrix<double,int>& y);
+  template csr_matrix<double,int>& daxpy(const double alpha, const csr_matrix<double,int>& x, csr_matrix<double,int>& y);
 
   template double ddot(const vector<double,int>& x, const vector<double,int>& y);
   template double ddot(const dense_matrix<double,int>& x, const dense_matrix<double,int>& y);
@@ -697,18 +697,18 @@ namespace marlib {
 
   // BLAS level 2
 
-  template vector<double,int>& dgemv(const trans_t& trans, const double& alpha,
+  template vector<double,int>& dgemv(const trans_t& trans, const double alpha,
     const dense_matrix<double,int>& A, const vector<double,int>& x,
-    const double& beta, vector<double,int>& y);
-  template vector<double,int>& dgemv(const trans_t& trans, const double& alpha,
+    const double beta, vector<double,int>& y);
+  template vector<double,int>& dgemv(const trans_t& trans, const double alpha,
     const csr_matrix<double,int>& A, const vector<double,int>& x,
-    const double& beta, vector<double,int>& y);
+    const double beta, vector<double,int>& y);
 
   template dense_matrix<double,int>& dger(const trans_t& trans,
-    const double& alpha, const vector<double,int>& x, const vector<double,int>& y,
+    const double alpha, const vector<double,int>& x, const vector<double,int>& y,
     dense_matrix<double,int>& A);
   template csr_matrix<double,int>& dger(const trans_t& trans,
-    const double& alpha, const vector<double,int>& x, const vector<double,int>& y,
+    const double alpha, const vector<double,int>& x, const vector<double,int>& y,
     csr_matrix<double,int>& A);
 
   // BLAS level 3
@@ -716,19 +716,19 @@ namespace marlib {
   template dense_matrix<double,int>& dgemm(
     const trans_t& transA,
     const trans_t& transB,
-    const double& alpha,
+    const double alpha,
     const dense_matrix<double,int>& A,
     const dense_matrix<double,int>& B,
-    const double& beta,
+    const double beta,
     dense_matrix<double,int>& C);
 
   template dense_matrix<double,int>& dgemm(
     const trans_t& transA,
     const trans_t& transB,
-    const double& alpha,
+    const double alpha,
     const csr_matrix<double,int>& A,
     const dense_matrix<double,int>& B,
-    const double& beta,
+    const double beta,
     dense_matrix<double,int>& C);
 
   // lapack

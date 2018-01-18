@@ -76,7 +76,7 @@ namespace dblas {
    * @param incy increment of index of vector y
    */
 
-  void dcopy(const int& n, const double *x, const int& incx, double *y, const int& incy) {
+  void dcopy(const int n, const double *x, const int incx, double *y, const int incy) {
     __DCOPY__(&n, x, &incx, y, &incy);
   }
 
@@ -88,7 +88,7 @@ namespace dblas {
     * @param incx increment of index of vector x
     */
 
-  void dscal(const int& n, const double& alpha, double *x, const int& incx) {
+  void dscal(const int n, const double alpha, double *x, const int incx) {
     __DSCAL__(&n, &alpha, x, &incx);
   }
 
@@ -101,8 +101,8 @@ namespace dblas {
    * @param incy increment of index of vector y
    */
 
-  void daxpy(const int& n, const double& alpha, const double *x, const int& incx,
-    double *y, const int& incy) {
+  void daxpy(const int n, const double alpha, const double *x, const int incx,
+    double *y, const int incy) {
     __DAXPY__(&n, &alpha, x, &incx, y, &incy);
   }
 
@@ -116,8 +116,8 @@ namespace dblas {
    * @return a dot product of x and y
    */
 
-  double ddot(const int& n, const double *x, const int& incx,
-    const double *y, const int& incy) {
+  double ddot(const int n, const double *x, const int incx,
+    const double *y, const int incy) {
     return __DDOT__(&n, x, &incx, y, &incy);
   }
 
@@ -129,7 +129,7 @@ namespace dblas {
    * @return a l2norm of x
    */
 
-  double dasum(const int& n, const double *x, const int& incx) {
+  double dasum(const int n, const double *x, const int incx) {
     return __DASUM__(&n, x, &incx);
   }
 
@@ -141,7 +141,7 @@ namespace dblas {
    * @return a l2norm of x
    */
 
-  double dnrm2(const int& n, const double *x, const int& incx) {
+  double dnrm2(const int n, const double *x, const int incx) {
     return __DNRM2__(&n, x, &incx);
   }
 
@@ -168,7 +168,7 @@ namespace dblas {
   // }
   //
 
-  const double* idamax(const int& n, const double *x, const int& incx) {
+  const double* idamax(const int n, const double *x, const int incx) {
     const double* max = x;
     for (int i=0; i<n; i++, x+=incx) {
       if (fabs(*x) > fabs(*max)) {
@@ -195,9 +195,9 @@ namespace dblas {
     * @param incy increment of index of vector y
     */
 
-  void dgemv(const char& trans, const int& m, const int& n, const double& alpha,
-    const double *A, const int& lda, const double *x, const int& incx,
-    const double& beta, double *y, const int& incy) {
+  void dgemv(const char& trans, const int m, const int n, const double alpha,
+    const double *A, const int lda, const double *x, const int incx,
+    const double beta, double *y, const int incy) {
     __DGEMV__(&trans, &m, &n, &alpha, A, &lda, x, &incx, &beta, y, &incy);
   }
 
@@ -214,9 +214,9 @@ namespace dblas {
     * @param lda length of column data of matrix A
     */
 
-  void dger(const int& m, const int& n, const double& alpha,
-    const double *x, const int& incx, const double *y, const int& incy,
-    double *A, const int& lda) {
+  void dger(const int m, const int n, const double alpha,
+    const double *x, const int incx, const double *y, const int incy,
+    double *A, const int lda) {
     __DGER__(&m, &n, &alpha, x, &incx, y, &incy, A, &lda);
   }
 
@@ -239,9 +239,9 @@ namespace dblas {
     */
 
   void dgemm(const char& transA, const char& transB,
-    const int& m, const int& n, const int& k, const double& alpha,
-    const double *A, const int& lda, const double *B, const int& ldb,
-    const double& beta, double *C, const int& ldc) {
+    const int m, const int n, const int k, const double alpha,
+    const double *A, const int lda, const double *B, const int ldb,
+    const double beta, double *C, const int ldc) {
     __DGEMM__(&transA, &transB, &m, &n, &k, &alpha, A, &lda, B, &ldb, &beta, C, &ldc);
   }
 

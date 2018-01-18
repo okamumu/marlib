@@ -45,14 +45,14 @@ namespace marlib {
   dense_matrix<ValueT,RangeT>::~dense_matrix() { }
 
   // template <typename ValueT, typename RangeT>
-  // ValueT& dense_matrix<ValueT,RangeT>::operator()(const RangeT& i, const RangeT& j) {
+  // ValueT& dense_matrix<ValueT,RangeT>::operator()(const RangeT i, const RangeT j) {
   //   const RangeT x = i - m_row.begin();
   //   const RangeT y = j - m_col.begin();
   //   return m_value[x + y * m_ld];
   // }
   //
   // template <typename ValueT, typename RangeT>
-  // const ValueT& dense_matrix<ValueT,RangeT>::operator()(const RangeT& i, const RangeT& j) const {
+  // const ValueT& dense_matrix<ValueT,RangeT>::operator()(const RangeT i, const RangeT j) const {
   //   const RangeT x = i - m_row.begin();
   //   const RangeT y = j - m_col.begin();
   //   return m_value[x + y * m_ld];
@@ -74,22 +74,22 @@ namespace marlib {
   // }
   //
   // template <typename ValueT, typename RangeT>
-  // const RangeT& dense_matrix<ValueT,RangeT>::rbegin() const {
+  // const RangeT dense_matrix<ValueT,RangeT>::rbegin() const {
   //   return m_row.begin();
   // }
   //
   // template <typename ValueT, typename RangeT>
-  // const RangeT& dense_matrix<ValueT,RangeT>::rend() const {
+  // const RangeT dense_matrix<ValueT,RangeT>::rend() const {
   //   return m_row.end();
   // }
   //
   // template <typename ValueT, typename RangeT>
-  // const RangeT& dense_matrix<ValueT,RangeT>::cbegin() const {
+  // const RangeT dense_matrix<ValueT,RangeT>::cbegin() const {
   //   return m_col.begin();
   // }
   //
   // template <typename ValueT, typename RangeT>
-  // const RangeT& dense_matrix<ValueT,RangeT>::cend() const {
+  // const RangeT dense_matrix<ValueT,RangeT>::cend() const {
   //   return m_col.end();
   // }
   //
@@ -104,7 +104,7 @@ namespace marlib {
   // }
   //
   // template <typename ValueT, typename RangeT>
-  // const vector<ValueT,RangeT> dense_matrix<ValueT,RangeT>::operator()(const range<RangeT>& row, const RangeT& col) const {
+  // const vector<ValueT,RangeT> dense_matrix<ValueT,RangeT>::operator()(const range<RangeT>& row, const RangeT col) const {
   //   array<ValueT> tmp = m_value.subarray(row.begin() - m_row.begin() + (col - m_col.begin()) * m_ld);
   //   return vector<ValueT,RangeT>(row.size(), tmp, 1);
   // }
@@ -153,26 +153,33 @@ namespace marlib {
   }
 
   template <typename ValueT, typename RangeT>
-  vector<ValueT,RangeT> dense_matrix<ValueT,RangeT>::operator()(const RangeT& row, const range<RangeT>& col) {
+  vector<ValueT,RangeT> dense_matrix<ValueT,RangeT>::operator()(const RangeT row, const range<RangeT>& col) {
     array<ValueT> tmp = m_value.subarray(row - m_row.begin() + (col.begin() - m_col.begin()) * m_ld);
     return vector<ValueT,RangeT>(col.size(), tmp, m_ld);
   }
 
   template <typename ValueT, typename RangeT>
-  const vector<ValueT,RangeT> dense_matrix<ValueT,RangeT>::operator()(const RangeT& row, const range<RangeT>& col) const {
+  const vector<ValueT,RangeT> dense_matrix<ValueT,RangeT>::operator()(const RangeT row, const range<RangeT>& col) const {
     array<ValueT> tmp = m_value.subarray(row - m_row.begin() + (col.begin() - m_col.begin()) * m_ld);
     return vector<ValueT,RangeT>(col.size(), tmp, m_ld);
   }
 
   template <typename ValueT, typename RangeT>
-  vector<ValueT,RangeT> dense_matrix<ValueT,RangeT>::operator()(const range<RangeT>& row, const RangeT& col) {
+  vector<ValueT,RangeT> dense_matrix<ValueT,RangeT>::operator()(const range<RangeT>& row, const RangeT col) {
     array<ValueT> tmp = m_value.subarray(row.begin() - m_row.begin() + (col - m_col.begin()) * m_ld);
     return vector<ValueT,RangeT>(row.size(), tmp, 1);
   }
 
   template <typename ValueT, typename RangeT>
   dense_matrix<ValueT,RangeT> dense_matrix<ValueT,RangeT>::clone() const {
-    dense_matrix<ValueT,RangeT> tmp(m_row, m_col, array<ValueT>(m_col.size()*m_ld), m_ld);
+    dense_matrix<ValueT,RangeT> tmp(m_row, m_col, array<ValueT>(m_value.size()), m_ld);
+    tmp = *this;
+    return tmp;
+  }
+
+  template <typename ValueT, typename RangeT>
+  dense_matrix<ValueT,RangeT> dense_matrix<ValueT,RangeT>::clone(ValueT* p) const {
+    dense_matrix<ValueT,RangeT> tmp(m_row, m_col, array<ValueT>(m_value.size(), p), m_ld);
     tmp = *this;
     return tmp;
   }
@@ -408,7 +415,7 @@ namespace marlib {
   }
 
   template <typename ValueT, typename RangeT>
-  vector<ValueT*,RangeT>& dense_matrix<ValueT,RangeT>::diag(vector<ValueT*,RangeT>& x, int offset, const RangeT& xindex) {
+  vector<ValueT*,RangeT>& dense_matrix<ValueT,RangeT>::diag(vector<ValueT*,RangeT>& x, int offset, const RangeT xindex) {
     RangeT ix=xindex, i, j;
     if (offset >= 0) {
       i=rbegin() + offset;

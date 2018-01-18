@@ -33,13 +33,13 @@ namespace marlib {
 */
 
   template <typename ValueT, typename RangeT>
-  gaussinte<ValueT,RangeT>::gaussinte(size_type n, const ValueT& eps)
+  gaussinte<ValueT,RangeT>::gaussinte(size_type n, const ValueT eps)
   : m_n(n), m_x(n), m_w(n) {
       comp_w(eps);
   }
 
   template <typename ValueT, typename RangeT>
-  void gaussinte<ValueT,RangeT>::comp_w(const ValueT& eps) {
+  void gaussinte<ValueT,RangeT>::comp_w(const ValueT eps) {
     constexpr ValueT pai = 3.14159265358979324;
     switch (m_n) {
       case 1:
@@ -109,7 +109,7 @@ namespace marlib {
   }
 
   template <typename ValueT, typename RangeT>
-  ValueT gaussinte<ValueT,RangeT>::comp_fx(const ValueT& a, const ValueT& b, vector<ValueT,RangeT>& fx) {
+  ValueT gaussinte<ValueT,RangeT>::comp_fx(const ValueT a, const ValueT b, vector<ValueT,RangeT>& fx) {
     ValueT t1 = (b - a)/2;
     ValueT t2 = (b + a)/2;
     for (RangeT i=m_x.begin(), ifx=fx.begin(); i<=m_x.end(); i++, ifx++) {
@@ -119,7 +119,7 @@ namespace marlib {
   }
 
   template <typename ValueT, typename RangeT>
-  ValueT gaussinte<ValueT,RangeT>::comp_value(const ValueT& c, const vector<ValueT,RangeT>& fv) {
+  ValueT gaussinte<ValueT,RangeT>::comp_value(const ValueT c, const vector<ValueT,RangeT>& fv) {
     ValueT s = 0;
     for (RangeT iw=m_w.begin(), iv=fv.begin(); iw<=m_w.end(); iw++, iv++) {
       s += m_w(iw) * fv(iv);

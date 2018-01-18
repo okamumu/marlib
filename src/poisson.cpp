@@ -10,27 +10,23 @@ poisson
 namespace marlib {
 
 	template <typename ValueT, typename RangeT>
-	poisson<ValueT,RangeT>::poisson(const ValueT& lambda, const ValueT& eps)
+	poisson<ValueT,RangeT>::poisson(const ValueT lambda, const ValueT eps)
 	: m_lambda(lambda), m_left(0), m_right(rightbound(lambda,eps)), m_prob(m_right+1), m_weight(set_prob()) {}
 
-	// template <typename ValueT, typename RangeT>
-	// poisson<ValueT,RangeT>::poisson(const ValueT& lambda, const ValueT& eps, array<ValueT>& prob)
-	// : m_lambda(lambda), m_left(0), m_right(comp_rightbound(eps)), m_prob(prob), m_weight(set_prob()) {}
-
 	template <typename ValueT, typename RangeT>
-	poisson<ValueT,RangeT>::poisson(const RangeT& minleft, const RangeT& maxright)
+	poisson<ValueT,RangeT>::poisson(const RangeT minleft, const RangeT maxright)
 	: m_left(minleft), m_right(maxright), m_prob(maxright-minleft+1) {}
 
 	template <typename ValueT, typename RangeT>
 	poisson<ValueT,RangeT>::~poisson() {}
 
 	// template <typename ValueT, typename RangeT>
-	// const RangeT& poisson<ValueT,RangeT>::left() const {
+	// const RangeT poisson<ValueT,RangeT>::left() const {
 	// 	return m_left;
 	// }
   //
 	// template <typename ValueT, typename RangeT>
-	// const RangeT& poisson<ValueT,RangeT>::right() const {
+	// const RangeT poisson<ValueT,RangeT>::right() const {
 	// 	return m_right;
 	// }
   //
@@ -40,27 +36,27 @@ namespace marlib {
 	// }
   //
 	// template <typename ValueT, typename RangeT>
-	// const ValueT& poisson<ValueT,RangeT>::weight() const {
+	// const ValueT poisson<ValueT,RangeT>::weight() const {
 	// 	return m_weight;
 	// }
   //
 	// template <typename ValueT, typename RangeT>
-	// const ValueT& poisson<ValueT,RangeT>::lambda() const {
+	// const ValueT poisson<ValueT,RangeT>::lambda() const {
 	// 	return m_lambda;
 	// }
   //
 	// template <typename ValueT, typename RangeT>
-	// const ValueT& poisson<ValueT,RangeT>::operator()(const RangeT& i) const {
+	// const ValueT poisson<ValueT,RangeT>::operator()(const RangeT i) const {
 	// 	return m_prob[i - m_left];
 	// }
 
 	template <typename ValueT, typename RangeT>
-	void poisson<ValueT,RangeT>::set(const ValueT& lambda, const ValueT& eps) {
+	void poisson<ValueT,RangeT>::set(const ValueT lambda, const ValueT eps) {
 		set(lambda, 0, rightbound(lambda, eps));
 	}
 
 	template <typename ValueT, typename RangeT>
-	void poisson<ValueT,RangeT>::set(const ValueT& lambda, const RangeT& left, const RangeT& right) {
+	void poisson<ValueT,RangeT>::set(const ValueT lambda, const RangeT left, const RangeT right) {
 		// if (m_lambda != lambda) {
 			m_lambda = lambda;
 			m_left = left;
@@ -81,7 +77,7 @@ namespace marlib {
 	*/
 
 	template <typename ValueT, typename RangeT>
-	ValueT poisson<ValueT,RangeT>::normalt(const ValueT& x) {
+	ValueT poisson<ValueT,RangeT>::normalt(const ValueT x) {
 		ValueT x2 = x*x;
 		ValueT tmp = x;
 		ValueT sum = 1 / tmp;
@@ -107,7 +103,7 @@ namespace marlib {
 	*/
 
 	template <typename ValueT, typename RangeT>
-	ValueT poisson<ValueT,RangeT>::normalq(const ValueT& p) {
+	ValueT poisson<ValueT,RangeT>::normalq(const ValueT p) {
 		const ValueT leps = log(p);
 		assert(leps <= NORMALQ_UPPER_LOGP && leps >= NORMALQ_LOWER_LOGP);
 		ValueT l = NORMALQ_LOWER_Q;
@@ -139,7 +135,7 @@ namespace marlib {
 	*/
 
 	template <typename ValueT, typename RangeT>
-	RangeT poisson<ValueT,RangeT>::rightbound(const ValueT& lambda, const ValueT& eps) {
+	RangeT poisson<ValueT,RangeT>::rightbound(const ValueT lambda, const ValueT eps) {
 		RangeT right;
 		if (lambda == 0) {
 			return 0;

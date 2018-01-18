@@ -33,14 +33,14 @@ namespace marlib {
   template <typename ValueT, typename RangeT>
   class gaussinte {
   public:
-    gaussinte(size_type n, const ValueT& eps = 1.0e-8);
+    gaussinte(size_type n, const ValueT eps = 1.0e-8);
 
-    ValueT comp_fx(const ValueT& a, const ValueT& b, vector<ValueT,RangeT>& fx);
-    ValueT comp_value(const ValueT& c, const vector<ValueT,RangeT>& fv);
+    ValueT comp_fx(const ValueT a, const ValueT b, vector<ValueT,RangeT>& fx);
+    ValueT comp_value(const ValueT c, const vector<ValueT,RangeT>& fv);
     const vector<ValueT,RangeT>& get_w() const;
 
     template <typename Func>
-    ValueT comp(const ValueT& a, const ValueT& b, Func&& f) {
+    ValueT comp(const ValueT a, const ValueT b, Func&& f) {
       vector<ValueT,RangeT> fx(m_n);
       ValueT c = comp_fx(a, b, fx);
       for (RangeT i=fx.begin(); i<=fx.end(); i++) {
@@ -54,7 +54,7 @@ namespace marlib {
     vector<ValueT,RangeT> m_x;
     vector<ValueT,RangeT> m_w;
 
-    void comp_w(const ValueT& eps);
+    void comp_w(const ValueT eps);
   };
 
 }

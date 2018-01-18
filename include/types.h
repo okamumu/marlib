@@ -4,7 +4,7 @@
 
 namespace marlib {
 
-  typedef std::size_t size_type;
+  typedef int size_type;
 
   enum trans_t : char {
     Trans = 'T',

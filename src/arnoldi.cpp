@@ -30,7 +30,7 @@ namespace marlib {
   template <typename ValueT, typename RangeT, typename MatrixT>
   size_type arnoldi(const trans_t& trans, const MatrixT& A,
     const vector<ValueT,RangeT>& x, dense_matrix<ValueT,RangeT> H, dense_matrix<ValueT,RangeT> V,
-    ValueT& beta, ValueT& rnorm, const ValueT& tol, const size_type& ite) {
+    ValueT& beta, ValueT& rnorm, const ValueT tol, const size_type ite) {
     assert(H.ncol() == V.ncol());
     assert(A.nrow() == A.ncol());
     size_type n = A.nrow();
@@ -72,9 +72,9 @@ namespace marlib {
 
   template size_type arnoldi(const trans_t& trans, const dense_matrix<double,int>& A,
     const vector<double,int>& x, dense_matrix<double,int> H, dense_matrix<double,int> V,
-    double& beta, double& rnorm, const double& tol, const size_type& ite);
+    double& beta, double& rnorm, const double tol, const size_type ite);
 
   template size_type arnoldi(const trans_t& trans, const csr_matrix<double,int>& A,
     const vector<double,int>& x, dense_matrix<double,int> H, dense_matrix<double,int> V,
-    double& beta, double& rnorm, const double& tol, const size_type& ite);
+    double& beta, double& rnorm, const double tol, const size_type ite);
 }

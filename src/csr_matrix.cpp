@@ -14,12 +14,12 @@ namespace marlib {
   template <typename ValueT, typename RangeT>
   csr_matrix<ValueT,RangeT>::csr_matrix(const range<RangeT>& row, const range<RangeT>& col,
     size_type nnz, const array<RangeT>& rowptr, const array<RangeT>& colind, const array<ValueT>& value,
-    const RangeT& origin)
+    const RangeT origin)
   : m_row(row), m_col(col), m_nnz(nnz), m_rowptr(rowptr), m_colind(colind), m_value(value),
   m_origin(origin) {}
 
   template <typename ValueT, typename RangeT>
-  csr_matrix<ValueT,RangeT>::csr_matrix(const dense_matrix<ValueT,RangeT>& m, const RangeT& origin)
+  csr_matrix<ValueT,RangeT>::csr_matrix(const dense_matrix<ValueT,RangeT>& m, const RangeT origin)
   : m_row(m.nrow()), m_col(m.ncol()), m_nnz(m.nnz()), m_rowptr(m.nrow()+1), m_colind(m_nnz), m_value(m_nnz),
   m_origin(origin) {
     copyfrom(m);
@@ -32,7 +32,7 @@ namespace marlib {
 
   template <typename ValueT, typename RangeT>
   csr_matrix<ValueT,RangeT>::csr_matrix(size_type row, size_type col, size_type nnz,
-    RangeT* rowptr, RangeT* colind, ValueT* value, const RangeT& origin)
+    RangeT* rowptr, RangeT* colind, ValueT* value, const RangeT origin)
   : m_row(row), m_col(col), m_nnz(nnz), m_rowptr(row+1,rowptr), m_colind(nnz,colind), m_value(nnz,value), m_origin(origin) { }
 
   template <typename ValueT, typename RangeT>
@@ -49,22 +49,22 @@ namespace marlib {
   // }
   //
   // template <typename ValueT, typename RangeT>
-  // const RangeT& csr_matrix<ValueT,RangeT>::rbegin() const {
+  // const RangeT csr_matrix<ValueT,RangeT>::rbegin() const {
   //   return m_row.begin();
   // }
   //
   // template <typename ValueT, typename RangeT>
-  // const RangeT& csr_matrix<ValueT,RangeT>::rend() const {
+  // const RangeT csr_matrix<ValueT,RangeT>::rend() const {
   //   return m_row.end();
   // }
   //
   // template <typename ValueT, typename RangeT>
-  // const RangeT& csr_matrix<ValueT,RangeT>::cbegin() const {
+  // const RangeT csr_matrix<ValueT,RangeT>::cbegin() const {
   //   return m_col.begin();
   // }
   //
   // template <typename ValueT, typename RangeT>
-  // const RangeT& csr_matrix<ValueT,RangeT>::cend() const {
+  // const RangeT csr_matrix<ValueT,RangeT>::cend() const {
   //   return m_col.end();
   // }
   //
@@ -99,33 +99,40 @@ namespace marlib {
   // }
   //
   // template <typename ValueT, typename RangeT>
-  // const RangeT& csr_matrix<ValueT,RangeT>::origin() const {
+  // const RangeT csr_matrix<ValueT,RangeT>::origin() const {
   //   return m_origin;
   // }
   //
   // template <typename ValueT, typename RangeT>
-  // size_type csr_matrix<ValueT,RangeT>::rowptr(const size_type& i) const {
+  // size_type csr_matrix<ValueT,RangeT>::rowptr(const size_type i) const {
   //   return m_rowptr[i] - m_origin;
   // }
   //
   // template <typename ValueT, typename RangeT>
-  // size_type csr_matrix<ValueT,RangeT>::colind(const size_type& i) const {
+  // size_type csr_matrix<ValueT,RangeT>::colind(const size_type i) const {
   //   return m_colind[i] - m_origin;
   // }
   //
   // template <typename ValueT, typename RangeT>
-  // ValueT& csr_matrix<ValueT,RangeT>::value(const size_type& i) {
+  // ValueT csr_matrix<ValueT,RangeT>::value(const size_type i) {
   //   return m_value[i];
   // }
   //
   // template <typename ValueT, typename RangeT>
-  // const ValueT& csr_matrix<ValueT,RangeT>::value(const size_type& i) const {
+  // const ValueT csr_matrix<ValueT,RangeT>::value(const size_type i) const {
   //   return m_value[i];
   // }
 
   template <typename ValueT, typename RangeT>
   csr_matrix<ValueT,RangeT> csr_matrix<ValueT,RangeT>::clone() const {
     csr_matrix<ValueT,RangeT> tmp(m_row, m_col, m_nnz, m_rowptr, m_colind, array<ValueT>(m_value.size()), m_origin);
+    tmp = *this;
+    return tmp;
+  }
+
+  template <typename ValueT, typename RangeT>
+  csr_matrix<ValueT,RangeT> csr_matrix<ValueT,RangeT>::clone(ValueT* p) const {
+    csr_matrix<ValueT,RangeT> tmp(m_row, m_col, m_nnz, m_rowptr, m_colind, array<ValueT>(m_value.size(), p), m_origin);
     tmp = *this;
     return tmp;
   }
@@ -350,7 +357,7 @@ namespace marlib {
   }
 
   template <typename ValueT, typename RangeT>
-  vector<ValueT*,RangeT>& csr_matrix<ValueT,RangeT>::diag(vector<ValueT*,RangeT>& x, int offset, const RangeT& xindex) {
+  vector<ValueT*,RangeT>& csr_matrix<ValueT,RangeT>::diag(vector<ValueT*,RangeT>& x, int offset, const RangeT xindex) {
     size_type i;
     if (offset >= 0) {
       i = offset;
