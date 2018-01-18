@@ -80,9 +80,62 @@ namespace marlib {
   };
 
   template <typename ValueT, typename RangeT>
+  inline ValueT& vector<ValueT,RangeT>::operator()(const RangeT& i) {
+    return m_elem[(i - m_range.begin()) * m_inc];
+  }
+
+  template <typename ValueT, typename RangeT>
+  inline const ValueT& vector<ValueT,RangeT>::operator()(const RangeT& i) const {
+    return m_elem[(i - m_range.begin()) * m_inc];
+  }
+
+  template <typename ValueT, typename RangeT>
+  inline ValueT* vector<ValueT,RangeT>::ptr() {
+    return &operator()(m_range.begin());
+  }
+
+  template <typename ValueT, typename RangeT>
+  inline const ValueT* vector<ValueT,RangeT>::ptr() const {
+    return &operator()(m_range.begin());
+  }
+
+  template <typename ValueT, typename RangeT>
+  inline size_type vector<ValueT,RangeT>::inc() const {
+    return m_inc;
+  }
+
+  template <typename ValueT, typename RangeT>
+  inline const RangeT& vector<ValueT,RangeT>::begin() const {
+    return m_range.begin();
+  }
+
+  template <typename ValueT, typename RangeT>
+  inline const RangeT& vector<ValueT,RangeT>::end() const {
+    return m_range.end();
+  }
+
+  template <typename ValueT, typename RangeT>
+  inline size_type vector<ValueT,RangeT>::size() const {
+    return m_range.size();
+  }
+
+  template <typename ValueT, typename RangeT>
+  inline const array<ValueT>& vector<ValueT,RangeT>::value() const {
+    return m_elem;
+  }
+
+  template <typename ValueT, typename RangeT>
+  inline void vector<ValueT,RangeT>::set_range(const range<RangeT>& r) {
+    assert(r.size() == m_range.size());
+    m_range = r;
+  }
+
+  template <typename ValueT, typename RangeT>
   std::ostream& operator<<(std::ostream& os, const vector<ValueT,RangeT>& v) {
     return v.print(os);
   }
+
+  //////////////////////////
 
   template <typename ValueT, typename RangeT>
   class vector<ValueT*,RangeT> {
@@ -136,4 +189,40 @@ namespace marlib {
     template <typename ValueTT, typename RangeTT>
     friend std::ostream& operator<< (std::ostream& os, const vector<ValueTT,RangeTT>& v);
   };
+
+  template <typename ValueT, typename RangeT>
+  inline ValueT*& vector<ValueT*,RangeT>::ptr(const RangeT& i) {
+    return m_elem.ptr((i - m_range.begin()) * m_inc);
+  }
+
+  template <typename ValueT, typename RangeT>
+  inline ValueT& vector<ValueT*,RangeT>::operator()(const RangeT& i) {
+    return m_elem[(i - m_range.begin()) * m_inc];
+  }
+
+  template <typename ValueT, typename RangeT>
+  inline const ValueT& vector<ValueT*,RangeT>::operator()(const RangeT& i) const {
+    return m_elem[(i - m_range.begin()) * m_inc];
+  }
+
+  template <typename ValueT, typename RangeT>
+  inline const RangeT& vector<ValueT*,RangeT>::begin() const {
+    return m_range.begin();
+  }
+
+  template <typename ValueT, typename RangeT>
+  inline const RangeT& vector<ValueT*,RangeT>::end() const {
+    return m_range.end();
+  }
+
+  template <typename ValueT, typename RangeT>
+  inline size_type vector<ValueT*,RangeT>::size() const {
+    return m_range.size();
+  }
+
+  template <typename ValueT, typename RangeT>
+  inline void vector<ValueT*,RangeT>::set_range(const range<RangeT>& r) {
+    assert(r.size() == m_range.size());
+    m_range = r;
+  }
 }

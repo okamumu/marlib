@@ -27,41 +27,41 @@ namespace marlib {
   template <typename ValueT, typename RangeT>
   vector<ValueT*,RangeT>::~vector() { }
 
-  template <typename ValueT, typename RangeT>
-  ValueT*& vector<ValueT*,RangeT>::ptr(const RangeT& i) {
-    return m_elem.ptr((i - m_range.begin()) * m_inc);
-  }
-
-  template <typename ValueT, typename RangeT>
-  ValueT& vector<ValueT*,RangeT>::operator()(const RangeT& i) {
-    return m_elem[(i - m_range.begin()) * m_inc];
-  }
-
-  template <typename ValueT, typename RangeT>
-  const ValueT& vector<ValueT*,RangeT>::operator()(const RangeT& i) const {
-    return m_elem[(i - m_range.begin()) * m_inc];
-  }
-
-  template <typename ValueT, typename RangeT>
-  const RangeT& vector<ValueT*,RangeT>::begin() const {
-    return m_range.begin();
-  }
-
-  template <typename ValueT, typename RangeT>
-  const RangeT& vector<ValueT*,RangeT>::end() const {
-    return m_range.end();
-  }
-
-  template <typename ValueT, typename RangeT>
-  size_type vector<ValueT*,RangeT>::size() const {
-    return m_range.size();
-  }
-
-  template <typename ValueT, typename RangeT>
-  void vector<ValueT*,RangeT>::set_range(const range<RangeT>& r) {
-    assert(r.size() == m_range.size());
-    m_range = r;
-  }
+  // template <typename ValueT, typename RangeT>
+  // ValueT*& vector<ValueT*,RangeT>::ptr(const RangeT& i) {
+  //   return m_elem.ptr((i - m_range.begin()) * m_inc);
+  // }
+  //
+  // template <typename ValueT, typename RangeT>
+  // ValueT& vector<ValueT*,RangeT>::operator()(const RangeT& i) {
+  //   return m_elem[(i - m_range.begin()) * m_inc];
+  // }
+  //
+  // template <typename ValueT, typename RangeT>
+  // const ValueT& vector<ValueT*,RangeT>::operator()(const RangeT& i) const {
+  //   return m_elem[(i - m_range.begin()) * m_inc];
+  // }
+  //
+  // template <typename ValueT, typename RangeT>
+  // const RangeT& vector<ValueT*,RangeT>::begin() const {
+  //   return m_range.begin();
+  // }
+  //
+  // template <typename ValueT, typename RangeT>
+  // const RangeT& vector<ValueT*,RangeT>::end() const {
+  //   return m_range.end();
+  // }
+  //
+  // template <typename ValueT, typename RangeT>
+  // size_type vector<ValueT*,RangeT>::size() const {
+  //   return m_range.size();
+  // }
+  //
+  // template <typename ValueT, typename RangeT>
+  // void vector<ValueT*,RangeT>::set_range(const range<RangeT>& r) {
+  //   assert(r.size() == m_range.size());
+  //   m_range = r;
+  // }
 
   // equal
   template <typename ValueT, typename RangeT>

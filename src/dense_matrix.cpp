@@ -44,64 +44,88 @@ namespace marlib {
   template <typename ValueT, typename RangeT>
   dense_matrix<ValueT,RangeT>::~dense_matrix() { }
 
-  template <typename ValueT, typename RangeT>
-  ValueT& dense_matrix<ValueT,RangeT>::operator()(const RangeT& i, const RangeT& j) {
-    const RangeT x = i - m_row.begin();
-    const RangeT y = j - m_col.begin();
-    return m_value[x + y * m_ld];
-  }
-
-  template <typename ValueT, typename RangeT>
-  const ValueT& dense_matrix<ValueT,RangeT>::operator()(const RangeT& i, const RangeT& j) const {
-    const RangeT x = i - m_row.begin();
-    const RangeT y = j - m_col.begin();
-    return m_value[x + y * m_ld];
-  }
-
-  template <typename ValueT, typename RangeT>
-  ValueT* dense_matrix<ValueT,RangeT>::ptr() {
-    return &operator()(m_row.begin(), m_col.begin());
-  }
-
-  template <typename ValueT, typename RangeT>
-  const ValueT* dense_matrix<ValueT,RangeT>::ptr() const {
-    return &operator()(m_row.begin(), m_col.begin());
-  }
-
-  template <typename ValueT, typename RangeT>
-  size_type dense_matrix<ValueT,RangeT>::ld() const {
-    return m_ld;
-  }
-
-  template <typename ValueT, typename RangeT>
-  const RangeT& dense_matrix<ValueT,RangeT>::rbegin() const {
-    return m_row.begin();
-  }
-
-  template <typename ValueT, typename RangeT>
-  const RangeT& dense_matrix<ValueT,RangeT>::rend() const {
-    return m_row.end();
-  }
-
-  template <typename ValueT, typename RangeT>
-  const RangeT& dense_matrix<ValueT,RangeT>::cbegin() const {
-    return m_col.begin();
-  }
-
-  template <typename ValueT, typename RangeT>
-  const RangeT& dense_matrix<ValueT,RangeT>::cend() const {
-    return m_col.end();
-  }
-
-  template <typename ValueT, typename RangeT>
-  size_type dense_matrix<ValueT,RangeT>::nrow() const {
-    return m_row.size();
-  }
-
-  template <typename ValueT, typename RangeT>
-  size_type dense_matrix<ValueT,RangeT>::ncol() const {
-    return m_col.size();
-  }
+  // template <typename ValueT, typename RangeT>
+  // ValueT& dense_matrix<ValueT,RangeT>::operator()(const RangeT& i, const RangeT& j) {
+  //   const RangeT x = i - m_row.begin();
+  //   const RangeT y = j - m_col.begin();
+  //   return m_value[x + y * m_ld];
+  // }
+  //
+  // template <typename ValueT, typename RangeT>
+  // const ValueT& dense_matrix<ValueT,RangeT>::operator()(const RangeT& i, const RangeT& j) const {
+  //   const RangeT x = i - m_row.begin();
+  //   const RangeT y = j - m_col.begin();
+  //   return m_value[x + y * m_ld];
+  // }
+  //
+  // template <typename ValueT, typename RangeT>
+  // ValueT* dense_matrix<ValueT,RangeT>::ptr() {
+  //   return &operator()(m_row.begin(), m_col.begin());
+  // }
+  //
+  // template <typename ValueT, typename RangeT>
+  // const ValueT* dense_matrix<ValueT,RangeT>::ptr() const {
+  //   return &operator()(m_row.begin(), m_col.begin());
+  // }
+  //
+  // template <typename ValueT, typename RangeT>
+  // size_type dense_matrix<ValueT,RangeT>::ld() const {
+  //   return m_ld;
+  // }
+  //
+  // template <typename ValueT, typename RangeT>
+  // const RangeT& dense_matrix<ValueT,RangeT>::rbegin() const {
+  //   return m_row.begin();
+  // }
+  //
+  // template <typename ValueT, typename RangeT>
+  // const RangeT& dense_matrix<ValueT,RangeT>::rend() const {
+  //   return m_row.end();
+  // }
+  //
+  // template <typename ValueT, typename RangeT>
+  // const RangeT& dense_matrix<ValueT,RangeT>::cbegin() const {
+  //   return m_col.begin();
+  // }
+  //
+  // template <typename ValueT, typename RangeT>
+  // const RangeT& dense_matrix<ValueT,RangeT>::cend() const {
+  //   return m_col.end();
+  // }
+  //
+  // template <typename ValueT, typename RangeT>
+  // size_type dense_matrix<ValueT,RangeT>::nrow() const {
+  //   return m_row.size();
+  // }
+  //
+  // template <typename ValueT, typename RangeT>
+  // size_type dense_matrix<ValueT,RangeT>::ncol() const {
+  //   return m_col.size();
+  // }
+  //
+  // template <typename ValueT, typename RangeT>
+  // const vector<ValueT,RangeT> dense_matrix<ValueT,RangeT>::operator()(const range<RangeT>& row, const RangeT& col) const {
+  //   array<ValueT> tmp = m_value.subarray(row.begin() - m_row.begin() + (col - m_col.begin()) * m_ld);
+  //   return vector<ValueT,RangeT>(row.size(), tmp, 1);
+  // }
+  //
+  // template <typename ValueT, typename RangeT>
+  // array<ValueT>& dense_matrix<ValueT,RangeT>::value() {
+  //   return m_value;
+  // }
+  //
+  // template <typename ValueT, typename RangeT>
+  // const array<ValueT>& dense_matrix<ValueT,RangeT>::value() const {
+  //   return m_value;
+  // }
+  //
+  // template <typename ValueT, typename RangeT>
+  // void dense_matrix<ValueT,RangeT>::set_range(const range<RangeT>& row, const range<RangeT>& col) {
+  //   assert(row.size() == m_row.size());
+  //   assert(col.size() == m_col.size());
+  //   m_row = row;
+  //   m_col = col;
+  // }
 
   template <typename ValueT, typename RangeT>
   size_type dense_matrix<ValueT,RangeT>::nnz() const {
@@ -144,30 +168,6 @@ namespace marlib {
   vector<ValueT,RangeT> dense_matrix<ValueT,RangeT>::operator()(const range<RangeT>& row, const RangeT& col) {
     array<ValueT> tmp = m_value.subarray(row.begin() - m_row.begin() + (col - m_col.begin()) * m_ld);
     return vector<ValueT,RangeT>(row.size(), tmp, 1);
-  }
-
-  template <typename ValueT, typename RangeT>
-  const vector<ValueT,RangeT> dense_matrix<ValueT,RangeT>::operator()(const range<RangeT>& row, const RangeT& col) const {
-    array<ValueT> tmp = m_value.subarray(row.begin() - m_row.begin() + (col - m_col.begin()) * m_ld);
-    return vector<ValueT,RangeT>(row.size(), tmp, 1);
-  }
-
-  template <typename ValueT, typename RangeT>
-  array<ValueT>& dense_matrix<ValueT,RangeT>::value() {
-    return m_value;
-  }
-
-  template <typename ValueT, typename RangeT>
-  const array<ValueT>& dense_matrix<ValueT,RangeT>::value() const {
-    return m_value;
-  }
-
-  template <typename ValueT, typename RangeT>
-  void dense_matrix<ValueT,RangeT>::set_range(const range<RangeT>& row, const range<RangeT>& col) {
-    assert(row.size() == m_row.size());
-    assert(col.size() == m_col.size());
-    m_row = row;
-    m_col = col;
   }
 
   template <typename ValueT, typename RangeT>

@@ -23,25 +23,25 @@ namespace marlib {
     T m_end;
 
   public:
-    size_type size() const {
+    inline size_type size() const {
       return static_cast<size_type>(m_end - m_begin + 1);
     }
 
-    const T& begin() const {
+    inline const T& begin() const {
       return m_begin;
     }
 
-    const T& end() const {
+    inline const T& end() const {
       return m_end;
     }
 
-    range<T>& operator=(const range<T>& v) {
+    inline range<T>& operator=(const range<T>& v) {
       m_begin = v.m_begin;
       m_end = v.m_end;
       return *this;
     }
 
-    bool operator==(const range<T>& v) const {
+    inline bool operator==(const range<T>& v) const {
       return m_begin == v.m_begin && m_end == v.m_end;
     }
   };

@@ -38,90 +38,90 @@ namespace marlib {
   template <typename ValueT, typename RangeT>
   csr_matrix<ValueT,RangeT>::~csr_matrix() { }
 
-  template <typename ValueT, typename RangeT>
-  ValueT* csr_matrix<ValueT,RangeT>::ptr() {
-    return &m_value[0];
-  }
-
-  template <typename ValueT, typename RangeT>
-  const ValueT* csr_matrix<ValueT,RangeT>::ptr() const {
-    return &m_value[0];
-  }
-
-  template <typename ValueT, typename RangeT>
-  const RangeT& csr_matrix<ValueT,RangeT>::rbegin() const {
-    return m_row.begin();
-  }
-
-  template <typename ValueT, typename RangeT>
-  const RangeT& csr_matrix<ValueT,RangeT>::rend() const {
-    return m_row.end();
-  }
-
-  template <typename ValueT, typename RangeT>
-  const RangeT& csr_matrix<ValueT,RangeT>::cbegin() const {
-    return m_col.begin();
-  }
-
-  template <typename ValueT, typename RangeT>
-  const RangeT& csr_matrix<ValueT,RangeT>::cend() const {
-    return m_col.end();
-  }
-
-  template <typename ValueT, typename RangeT>
-  size_type csr_matrix<ValueT,RangeT>::nrow() const {
-    return m_row.size();
-  }
-
-  template <typename ValueT, typename RangeT>
-  size_type csr_matrix<ValueT,RangeT>::ncol() const {
-    return m_col.size();
-  }
-
-  template <typename ValueT, typename RangeT>
-  size_type csr_matrix<ValueT,RangeT>::nnz() const {
-    return m_nnz;
-  }
-
-  template <typename ValueT, typename RangeT>
-  const array<RangeT>& csr_matrix<ValueT,RangeT>::rowptr() const {
-    return m_rowptr;
-  }
-
-  template <typename ValueT, typename RangeT>
-  const array<RangeT>& csr_matrix<ValueT,RangeT>::colind() const {
-    return m_colind;
-  }
-
-  template <typename ValueT, typename RangeT>
-  const array<ValueT>& csr_matrix<ValueT,RangeT>::value() const {
-    return m_value;
-  }
-
-  template <typename ValueT, typename RangeT>
-  const RangeT& csr_matrix<ValueT,RangeT>::origin() const {
-    return m_origin;
-  }
-
-  template <typename ValueT, typename RangeT>
-  size_type csr_matrix<ValueT,RangeT>::rowptr(const size_type& i) const {
-    return m_rowptr[i] - m_origin;
-  }
-
-  template <typename ValueT, typename RangeT>
-  size_type csr_matrix<ValueT,RangeT>::colind(const size_type& i) const {
-    return m_colind[i] - m_origin;
-  }
-
-  template <typename ValueT, typename RangeT>
-  ValueT& csr_matrix<ValueT,RangeT>::value(const size_type& i) {
-    return m_value[i];
-  }
-
-  template <typename ValueT, typename RangeT>
-  const ValueT& csr_matrix<ValueT,RangeT>::value(const size_type& i) const {
-    return m_value[i];
-  }
+  // template <typename ValueT, typename RangeT>
+  // ValueT* csr_matrix<ValueT,RangeT>::ptr() {
+  //   return &m_value[0];
+  // }
+  //
+  // template <typename ValueT, typename RangeT>
+  // const ValueT* csr_matrix<ValueT,RangeT>::ptr() const {
+  //   return &m_value[0];
+  // }
+  //
+  // template <typename ValueT, typename RangeT>
+  // const RangeT& csr_matrix<ValueT,RangeT>::rbegin() const {
+  //   return m_row.begin();
+  // }
+  //
+  // template <typename ValueT, typename RangeT>
+  // const RangeT& csr_matrix<ValueT,RangeT>::rend() const {
+  //   return m_row.end();
+  // }
+  //
+  // template <typename ValueT, typename RangeT>
+  // const RangeT& csr_matrix<ValueT,RangeT>::cbegin() const {
+  //   return m_col.begin();
+  // }
+  //
+  // template <typename ValueT, typename RangeT>
+  // const RangeT& csr_matrix<ValueT,RangeT>::cend() const {
+  //   return m_col.end();
+  // }
+  //
+  // template <typename ValueT, typename RangeT>
+  // size_type csr_matrix<ValueT,RangeT>::nrow() const {
+  //   return m_row.size();
+  // }
+  //
+  // template <typename ValueT, typename RangeT>
+  // size_type csr_matrix<ValueT,RangeT>::ncol() const {
+  //   return m_col.size();
+  // }
+  //
+  // template <typename ValueT, typename RangeT>
+  // size_type csr_matrix<ValueT,RangeT>::nnz() const {
+  //   return m_nnz;
+  // }
+  //
+  // template <typename ValueT, typename RangeT>
+  // const array<RangeT>& csr_matrix<ValueT,RangeT>::rowptr() const {
+  //   return m_rowptr;
+  // }
+  //
+  // template <typename ValueT, typename RangeT>
+  // const array<RangeT>& csr_matrix<ValueT,RangeT>::colind() const {
+  //   return m_colind;
+  // }
+  //
+  // template <typename ValueT, typename RangeT>
+  // const array<ValueT>& csr_matrix<ValueT,RangeT>::value() const {
+  //   return m_value;
+  // }
+  //
+  // template <typename ValueT, typename RangeT>
+  // const RangeT& csr_matrix<ValueT,RangeT>::origin() const {
+  //   return m_origin;
+  // }
+  //
+  // template <typename ValueT, typename RangeT>
+  // size_type csr_matrix<ValueT,RangeT>::rowptr(const size_type& i) const {
+  //   return m_rowptr[i] - m_origin;
+  // }
+  //
+  // template <typename ValueT, typename RangeT>
+  // size_type csr_matrix<ValueT,RangeT>::colind(const size_type& i) const {
+  //   return m_colind[i] - m_origin;
+  // }
+  //
+  // template <typename ValueT, typename RangeT>
+  // ValueT& csr_matrix<ValueT,RangeT>::value(const size_type& i) {
+  //   return m_value[i];
+  // }
+  //
+  // template <typename ValueT, typename RangeT>
+  // const ValueT& csr_matrix<ValueT,RangeT>::value(const size_type& i) const {
+  //   return m_value[i];
+  // }
 
   template <typename ValueT, typename RangeT>
   csr_matrix<ValueT,RangeT> csr_matrix<ValueT,RangeT>::clone() const {

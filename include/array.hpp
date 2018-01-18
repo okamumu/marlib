@@ -36,11 +36,11 @@ namespace marlib {
     T* m_ptr;
 
   public:
-    T& operator[](size_type i) {
+    inline T& operator[](size_type i) {
       return m_ptr[i];
     }
 
-    const T& operator[](size_type i) const {
+    inline const T& operator[](size_type i) const {
       return m_ptr[i];
     }
   };
@@ -67,25 +67,25 @@ namespace marlib {
     array(size_type size, const std::shared_ptr<array_base<T>>& ptr, T* base) : m_ptr(ptr), m_size(size), m_base(base) {}
 
   public:
-    T& operator[](size_type i) {
+    inline T& operator[](size_type i) {
       assert(i >= 0 && i < m_size);
       return m_base[i];
     }
 
-    const T& operator[](size_type i) const {
+    inline const T& operator[](size_type i) const {
       assert(i >= 0 && i < m_size);
       return m_base[i];
     }
 
-    size_type size() const {
+    inline size_type size() const {
       return m_size;
     }
 
-    array<T> subarray(size_type i) {
+    inline array<T> subarray(size_type i) {
       return array(m_size - i, m_ptr, m_base + i);
     }
 
-    const array<T> subarray(size_type i) const {
+    inline const array<T> subarray(size_type i) const {
       return array(m_size - i, m_ptr, m_base + i);
     }
 
@@ -130,30 +130,30 @@ namespace marlib {
     array(size_type size, const std::shared_ptr<array_base<T*>>& ptr, T** base) : m_ptr(ptr), m_size(size), m_base(base) {}
 
   public:
-    T*& ptr(size_type i) {
+    inline T*& ptr(size_type i) {
       assert(i >= 0 && i < m_size);
       return m_base[i];
     }
 
-    T& operator[](size_type i) {
+    inline T& operator[](size_type i) {
       assert(i >= 0 && i < m_size);
       return *m_base[i];
     }
 
-    const T& operator[](size_type i) const {
+    inline const T& operator[](size_type i) const {
       assert(i >= 0 && i < m_size);
       return *m_base[i];
     }
 
-    size_type size() const {
+    inline size_type size() const {
       return m_size;
     }
 
-    array<T*> subarray(size_type i) {
+    inline array<T*> subarray(size_type i) {
       return array(m_size - i, m_ptr, m_base + i);
     }
 
-    const array<T*> subarray(size_type i) const {
+    inline const array<T*> subarray(size_type i) const {
       return array(m_size - i, m_ptr, m_base + i);
     }
 

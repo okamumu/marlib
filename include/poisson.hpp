@@ -53,4 +53,33 @@ namespace marlib {
 
 	};
 
+  template <typename ValueT, typename RangeT>
+	inline const RangeT& poisson<ValueT,RangeT>::left() const {
+		return m_left;
+	}
+
+	template <typename ValueT, typename RangeT>
+	inline const RangeT& poisson<ValueT,RangeT>::right() const {
+		return m_right;
+	}
+
+	template <typename ValueT, typename RangeT>
+	inline array<ValueT>& poisson<ValueT,RangeT>::get_prob() {
+		return m_prob;
+	}
+
+	template <typename ValueT, typename RangeT>
+	inline const ValueT& poisson<ValueT,RangeT>::weight() const {
+		return m_weight;
+	}
+
+	template <typename ValueT, typename RangeT>
+	inline const ValueT& poisson<ValueT,RangeT>::lambda() const {
+		return m_lambda;
+	}
+
+	template <typename ValueT, typename RangeT>
+	inline const ValueT& poisson<ValueT,RangeT>::operator()(const RangeT& i) const {
+		return m_prob[i - m_left];
+	}
 }
