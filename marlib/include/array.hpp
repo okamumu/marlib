@@ -7,16 +7,16 @@ namespace marlib {
   template <typename T>
   class array_base {
   public:
-    array_base(size_type size)
+    inline array_base(size_type size)
     : m_delete_ptr(true), m_ptr(new T[size]) {}
 
-    array_base(const array_base<T>& a)
+    inline array_base(const array_base<T>& a)
     : m_delete_ptr(a.m_delete_ptr), m_ptr(a.m_ptr) { }
 
-    array_base(T* v)
+    inline array_base(T* v)
     : m_delete_ptr(false), m_ptr(v) { }
 
-    ~array_base() {
+    inline ~array_base() {
       // std::cout << "destructor" << std::endl;
       if (m_delete_ptr) {
         delete [] m_ptr;
@@ -40,15 +40,15 @@ namespace marlib {
   template <typename T>
   class array {
   public:
-    array(size_type size) : m_ptr(new array_base<T>(size)), m_size(size) {
+    inline array(size_type size) : m_ptr(new array_base<T>(size)), m_size(size) {
       m_base = &(*m_ptr)[0];
     }
 
-    array(const array<T>& a) : m_ptr(a.m_ptr), m_size(a.m_size), m_base(a.m_base) { }
+    inline array(const array<T>& a) : m_ptr(a.m_ptr), m_size(a.m_size), m_base(a.m_base) { }
 
-    array(size_type size, T* v) : m_ptr(new array_base<T>(v)), m_size(size), m_base(v) { }
+    inline array(size_type size, T* v) : m_ptr(new array_base<T>(v)), m_size(size), m_base(v) { }
 
-    ~array() {}
+    inline ~array() {}
 
   private:
     std::shared_ptr< array_base<T> > m_ptr;
@@ -56,7 +56,7 @@ namespace marlib {
     T* m_base;
 
     // create sub-array
-    array(size_type size, const std::shared_ptr<array_base<T>>& ptr, T* base) : m_ptr(ptr), m_size(size), m_base(base) {}
+    inline array(size_type size, const std::shared_ptr<array_base<T>>& ptr, T* base) : m_ptr(ptr), m_size(size), m_base(base) {}
 
   public:
     inline T& operator[](size_type i) {
@@ -102,16 +102,16 @@ namespace marlib {
   template <typename T>
   class array<T*> {
   public:
-    array(size_type size)
+    inline array(size_type size)
     : m_ptr(new array_base<T*>(size)), m_size(size), m_base(&((*m_ptr)[0])) { }
 
-    array(const array<T>& a)
+    inline array(const array<T>& a)
     : m_ptr(a.m_ptr), m_size(a.m_size), m_base(a.m_base) { }
 
-    array(size_type size, T** v)
+    inline array(size_type size, T** v)
     : m_ptr(new array_base<T*>(v)), m_size(size), m_base(v) { }
 
-    ~array() {}
+    inline ~array() {}
 
   private:
     std::shared_ptr<array_base<T*>> m_ptr;
@@ -119,7 +119,7 @@ namespace marlib {
     T** m_base;
 
     // create sub-array
-    array(size_type size, const std::shared_ptr<array_base<T*>>& ptr, T** base) : m_ptr(ptr), m_size(size), m_base(base) {}
+    inline array(size_type size, const std::shared_ptr<array_base<T*>>& ptr, T** base) : m_ptr(ptr), m_size(size), m_base(base) {}
 
   public:
     inline T*& ptr(size_type i) {

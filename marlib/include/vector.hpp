@@ -5,72 +5,37 @@
 namespace marlib {
 
   template <typename ValueT, typename RangeT>
-  class vector {
-  public:
-    using ValueType = ValueT;
-    using RangeType = RangeT;
+  vector<ValueT,RangeT>::vector(size_type size, const array<ValueT>& a, size_type inc)
+  : m_range(size), m_value(a), m_inc(inc) {}
 
-    vector(size_type size, const array<ValueT>& a, size_type inc);
-    vector(const vector<ValueT,RangeT>& v);
-    vector(const vector<ValueT,RangeT>& v, ValueT* p);
-    vector(size_type size);
-    vector(size_type size, ValueT* v, size_type inc);
-    vector(std::initializer_list<ValueT> v);
-    ~vector();
+  template <typename ValueT, typename RangeT>
+  vector<ValueT,RangeT>::vector(const range<RangeT>& r, const array<ValueT>& a, size_type inc)
+  : m_range(r), m_value(a), m_inc(inc) {}
 
-  private:
-    vector(const range<RangeT>& r, const array<ValueT>& a, size_type inc);
-    range<RangeT> m_range;
-    array<ValueT> m_value;
-    size_type m_inc;
+  template <typename ValueT, typename RangeT>
+  vector<ValueT,RangeT>::vector(const vector<ValueT,RangeT>& v)
+  : m_range(v.m_range), m_value(v.m_value), m_inc(v.m_inc) {}
 
-  public:
-    ValueT& operator()(const RangeT i);
-    const ValueT& operator()(const RangeT i) const;
+  template <typename ValueT, typename RangeT>
+  vector<ValueT,RangeT>::vector(const vector<ValueT,RangeT>& v, ValueT* p)
+  : m_range(v.m_range), m_value(v.m_value.size(),p), m_inc(v.m_inc) {}
 
-    const ValueT* ptr() const;
-    ValueT* ptr();
+  template <typename ValueT, typename RangeT>
+  vector<ValueT,RangeT>::vector(size_type size)
+  : m_range(size), m_value(size), m_inc(1) {}
 
-    size_type inc() const;
-    const RangeT begin() const;
-    const RangeT end() const;
-    size_type size() const;
-    vector<ValueT,RangeT> operator()(const range<RangeT>& r);
-    const vector<ValueT,RangeT> operator()(const range<RangeT>& r) const;
-    const array<ValueT>& value() const;
-    void set_range(const range<RangeT>& r);
-    vector<ValueT,RangeT> clone() const;
-    vector<ValueT,RangeT> clone(ValueT* p) const;
+  template <typename ValueT, typename RangeT>
+  vector<ValueT,RangeT>::vector(size_type size, ValueT* v, size_type inc)
+  : m_range(size), m_value(size*inc,v), m_inc(inc) {}
 
-    // equal
-    vector<ValueT,RangeT>& operator=(const ValueT& v);
-    vector<ValueT,RangeT>& operator=(const vector<ValueT,RangeT>& v);
-    vector<ValueT,RangeT>& operator=(const vector<ValueT*,RangeT>& v);
+  template <typename ValueT, typename RangeT>
+  vector<ValueT,RangeT>::vector(std::initializer_list<ValueT> v)
+  : m_range(v.size()), m_value(v.size()), m_inc(1) {
+    copyfrom(v.begin());
+  }
 
-    // arithmetic operators
-    vector<ValueT,RangeT>& operator+=(const vector<ValueT,RangeT>& v);
-    vector<ValueT,RangeT>& operator-=(const vector<ValueT,RangeT>& v);
-    vector<ValueT,RangeT>& operator*=(const vector<ValueT,RangeT>& v);
-    vector<ValueT,RangeT>& operator/=(const vector<ValueT,RangeT>& v);
-
-    vector<ValueT,RangeT>& operator+=(const ValueT& v);
-    vector<ValueT,RangeT>& operator-=(const ValueT& v);
-    vector<ValueT,RangeT>& operator*=(const ValueT& v);
-    vector<ValueT,RangeT>& operator/=(const ValueT& v);
-
-    vector<ValueT,RangeT> operator+(const vector<ValueT,RangeT>& v) const;
-    vector<ValueT,RangeT> operator-(const vector<ValueT,RangeT>& v) const;
-    vector<ValueT,RangeT> operator*(const vector<ValueT,RangeT>& v) const;
-    vector<ValueT,RangeT> operator/(const vector<ValueT,RangeT>& v) const;
-
-    ////// print
-    std::ostream& print(std::ostream& os) const;
-
-    template <typename ValueTT, typename RangeTT>
-    friend std::ostream& operator<< (std::ostream& os, const vector<ValueTT,RangeTT>& v);
-
-    vector<ValueT,RangeT>& copyfrom(const ValueT* x);
-  };
+  template <typename ValueT, typename RangeT>
+  vector<ValueT,RangeT>::~vector() { }
 
   template <typename ValueT, typename RangeT>
   inline ValueT& vector<ValueT,RangeT>::operator()(const RangeT i) {
@@ -124,98 +89,230 @@ namespace marlib {
   }
 
   template <typename ValueT, typename RangeT>
-  std::ostream& operator<<(std::ostream& os, const vector<ValueT,RangeT>& v) {
-    return v.print(os);
-  }
-
-  //////////////////////////
-
-  template <typename ValueT, typename RangeT>
-  class vector<ValueT*,RangeT> {
-  public:
-    vector(size_type size, const array<ValueT*>& a, size_type inc);
-    vector(const vector<ValueT*,RangeT>& v);
-    vector(size_type size);
-    ~vector();
-
-  private:
-    vector(const range<RangeT>& r, const array<ValueT*>& a, size_type inc);
-    range<RangeT> m_range;
-    array<ValueT*> m_value;
-    size_type m_inc;
-
-  public:
-    ValueT*& ptr(const RangeT i);
-    ValueT& operator()(const RangeT i);
-    const ValueT& operator()(const RangeT i) const;
-
-    const RangeT begin() const;
-    const RangeT end() const;
-    size_type size() const;
-
-    void set_range(const range<RangeT>& r);
-
-    // equal
-    vector<ValueT*,RangeT>& operator=(const ValueT& v);
-    vector<ValueT*,RangeT>& operator=(const vector<ValueT,RangeT>& v);
-    vector<ValueT*,RangeT>& operator=(const vector<ValueT*,RangeT>& v);
-
-    // arithmetic operators
-    vector<ValueT*,RangeT>& operator+=(const vector<ValueT,RangeT>& v);
-    vector<ValueT*,RangeT>& operator-=(const vector<ValueT,RangeT>& v);
-    vector<ValueT*,RangeT>& operator*=(const vector<ValueT,RangeT>& v);
-    vector<ValueT*,RangeT>& operator/=(const vector<ValueT,RangeT>& v);
-
-    vector<ValueT*,RangeT>& operator+=(const ValueT& v);
-    vector<ValueT*,RangeT>& operator-=(const ValueT& v);
-    vector<ValueT*,RangeT>& operator*=(const ValueT& v);
-    vector<ValueT*,RangeT>& operator/=(const ValueT& v);
-
-    vector<ValueT,RangeT> operator+(const vector<ValueT,RangeT>& v) const;
-    vector<ValueT,RangeT> operator-(const vector<ValueT,RangeT>& v) const;
-    vector<ValueT,RangeT> operator*(const vector<ValueT,RangeT>& v) const;
-    vector<ValueT,RangeT> operator/(const vector<ValueT,RangeT>& v) const;
-
-    ////// print
-    std::ostream& print(std::ostream& os) const;
-
-    template <typename ValueTT, typename RangeTT>
-    friend std::ostream& operator<< (std::ostream& os, const vector<ValueTT,RangeTT>& v);
-  };
-
-  template <typename ValueT, typename RangeT>
-  inline ValueT*& vector<ValueT*,RangeT>::ptr(const RangeT i) {
-    return m_value.ptr((i - m_range.begin()) * m_inc);
+  vector<ValueT,RangeT> vector<ValueT,RangeT>::operator()(const range<RangeT>& r) {
+    array<ValueT> tmp = m_value.subarray((r.begin() - m_range.begin()) * m_inc);
+    return vector<ValueT,RangeT>(range<RangeT>(r.size()), tmp, m_inc);
   }
 
   template <typename ValueT, typename RangeT>
-  inline ValueT& vector<ValueT*,RangeT>::operator()(const RangeT i) {
-    return m_value[(i - m_range.begin()) * m_inc];
+  const vector<ValueT,RangeT> vector<ValueT,RangeT>::operator()(const range<RangeT>& r) const {
+    array<ValueT> tmp = m_value.subarray((r.begin() - m_range.begin()) * m_inc);
+    return vector<ValueT,RangeT>(range<RangeT>(r.size()), tmp, m_inc);
   }
 
   template <typename ValueT, typename RangeT>
-  inline const ValueT& vector<ValueT*,RangeT>::operator()(const RangeT i) const {
-    return m_value[(i - m_range.begin()) * m_inc];
+  vector<ValueT,RangeT> vector<ValueT,RangeT>::clone() const {
+    vector<ValueT,RangeT> tmp(m_range, array<ValueT>(m_value.size()), m_inc);
+    tmp = *this;
+    return tmp;
   }
 
   template <typename ValueT, typename RangeT>
-  inline const RangeT vector<ValueT*,RangeT>::begin() const {
-    return m_range.begin();
+  vector<ValueT,RangeT> vector<ValueT,RangeT>::clone(ValueT* p) const {
+    vector<ValueT,RangeT> tmp(m_range, array<ValueT>(m_value.size(), p), m_inc);
+    tmp = *this;
+    return tmp;
+  }
+
+  // equal
+  template <typename ValueT, typename RangeT>
+  vector<ValueT,RangeT>& vector<ValueT,RangeT>::operator=(const ValueT& v) {
+    if (inc() == 1) {
+      std::fill_n(ptr(), size(), v);
+    } else {
+      for (RangeT i=begin(); i<=end(); i++) {
+        operator()(i) = v;
+      }
+    }
+    return *this;
   }
 
   template <typename ValueT, typename RangeT>
-  inline const RangeT vector<ValueT*,RangeT>::end() const {
-    return m_range.end();
+  vector<ValueT,RangeT>& vector<ValueT,RangeT>::operator=(const vector<ValueT,RangeT>& x) {
+    assert(size() == x.size());
+    for (RangeT i=begin(), j=x.begin(); i<=end(); i++, j++) {
+      operator()(i) = x(j);
+    }
+    return *this;
   }
 
   template <typename ValueT, typename RangeT>
-  inline size_type vector<ValueT*,RangeT>::size() const {
-    return m_range.size();
+  vector<ValueT,RangeT>& vector<ValueT,RangeT>::operator=(const vector<ValueT*,RangeT>& x) {
+    assert(size() == x.size());
+    for (RangeT i=begin(), j=x.begin(); i<=end(); i++, j++) {
+      operator()(i) = x(j);
+    }
+    return *this;
+  }
+
+  // arithmetic operators
+
+  template <typename ValueT, typename RangeT>
+  vector<ValueT,RangeT>& vector<ValueT,RangeT>::operator+=(const vector<ValueT,RangeT>& v) {
+    assert(size() == v.size());
+    for (RangeT i=begin(), j=v.begin(); i<=end(); i++, j++) {
+      operator()(i) += v(j);
+    }
+    return *this;
   }
 
   template <typename ValueT, typename RangeT>
-  inline void vector<ValueT*,RangeT>::set_range(const range<RangeT>& r) {
-    assert(r.size() == m_range.size());
-    m_range = r;
+  vector<ValueT,RangeT>& vector<ValueT,RangeT>::operator-=(const vector<ValueT,RangeT>& v) {
+    assert(size() == v.size());
+    for (RangeT i=begin(), j=v.begin(); i<=end(); i++, j++) {
+      operator()(i) -= v(j);
+    }
+    return *this;
   }
+
+  template <typename ValueT, typename RangeT>
+  vector<ValueT,RangeT>& vector<ValueT,RangeT>::operator*=(const vector<ValueT,RangeT>& v) {
+    assert(size() == v.size());
+    for (RangeT i=begin(), j=v.begin(); i<=end(); i++, j++) {
+      operator()(i) *= v(j);
+    }
+    return *this;
+  }
+
+  template <typename ValueT, typename RangeT>
+  vector<ValueT,RangeT>& vector<ValueT,RangeT>::operator/=(const vector<ValueT,RangeT>& v) {
+    assert(size() == v.size());
+    for (RangeT i=begin(), j=v.begin(); i<=end(); i++, j++) {
+      operator()(i) /= v(j);
+    }
+    return *this;
+  }
+
+  template <typename ValueT, typename RangeT>
+  vector<ValueT,RangeT>& vector<ValueT,RangeT>::operator+=(const ValueT& v) {
+    for (RangeT i=begin(); i<=end(); i++) {
+      operator()(i) += v;
+    }
+    return *this;
+  }
+
+  template <typename ValueT, typename RangeT>
+  vector<ValueT,RangeT>& vector<ValueT,RangeT>::operator-=(const ValueT& v) {
+    for (RangeT i=begin(); i<=end(); i++) {
+      operator()(i) -= v;
+    }
+    return *this;
+  }
+
+  template <typename ValueT, typename RangeT>
+  vector<ValueT,RangeT>& vector<ValueT,RangeT>::operator*=(const ValueT& v) {
+    for (RangeT i=begin(); i<=end(); i++) {
+      operator()(i) *= v;
+    }
+    return *this;
+  }
+
+  template <typename ValueT, typename RangeT>
+  vector<ValueT,RangeT>& vector<ValueT,RangeT>::operator/=(const ValueT& v) {
+    for (RangeT i=begin(); i<=end(); i++) {
+      operator()(i) /= v;
+    }
+    return *this;
+  }
+
+  template <typename ValueT, typename RangeT>
+  vector<ValueT,RangeT> vector<ValueT,RangeT>::operator+(const vector<ValueT,RangeT>& v) const {
+    assert(size() == v.size());
+    vector<ValueT,RangeT> result = clone();
+    result += v;
+    return result;
+  }
+
+  template <typename ValueT, typename RangeT>
+  vector<ValueT,RangeT> vector<ValueT,RangeT>::operator-(const vector<ValueT,RangeT>& v) const {
+    assert(size() == v.size());
+    vector<ValueT,RangeT> result = clone();
+    result -= v;
+    return result;
+  }
+
+  template <typename ValueT, typename RangeT>
+  vector<ValueT,RangeT> vector<ValueT,RangeT>::operator*(const vector<ValueT,RangeT>& v) const {
+    assert(size() == v.size());
+    vector<ValueT,RangeT> result = clone();
+    result *= v;
+    return result;
+  }
+
+  template <typename ValueT, typename RangeT>
+  vector<ValueT,RangeT> vector<ValueT,RangeT>::operator/(const vector<ValueT,RangeT>& v) const {
+    assert(size() == v.size());
+    vector<ValueT,RangeT> result = clone();
+    result /= v;
+    return result;
+  }
+
+  ////// print
+
+  template <typename ValueT, typename RangeT>
+  std::ostream& vector<ValueT,RangeT>::print(std::ostream& os) const {
+    for (RangeT i=begin(); i<=end(); i++) {
+      os << operator()(i) << " ";
+    }
+    return os;
+  }
+
+  template <typename ValueT, typename RangeT>
+  vector<ValueT,RangeT>& vector<ValueT,RangeT>::copyfrom(const ValueT* x) {
+    for (RangeT i=begin(); i<=end(); i++, x++) {
+      operator()(i) = *x;
+    }
+    return *this;
+  }
+
+  // specialized
+
+#ifdef F77BLAS
+
+  template <>
+  inline
+  vector<double,int>& vector<double,int>::operator+=(const vector<double,int>& v) {
+    assert(size() == v.size());
+    dblas::daxpy(size(), 1, v.ptr(), v.inc(), ptr(), inc());
+    return *this;
+  }
+
+  template <>
+  inline
+  vector<double,int>& vector<double,int>::operator-=(const vector<double,int>& v) {
+    assert(size() == v.size());
+    dblas::daxpy(size(), -1, v.ptr(), v.inc(), ptr(), inc());
+    return *this;
+  }
+
+  template <>
+  inline
+  vector<double,int>& vector<double,int>::operator*=(const double& v) {
+    dblas::dscal(size(), v, ptr(), inc());
+    return *this;
+  }
+
+  template <>
+  inline
+  vector<double,int>& vector<double,int>::operator/=(const double& v) {
+    dblas::dscal(size(), 1/v, ptr(), inc());
+    return *this;
+  }
+
+  template <>
+  inline
+  vector<double,int>& vector<double,int>::operator=(const vector<double,int>& x) {
+    assert(size() == x.size());
+    dblas::dcopy(size(), x.ptr(), x.inc(), ptr(), inc());
+    return *this;
+  }
+
+  // template <>
+  // vector<double,int>& vector<double,int>::operator=(const double* x) {
+  //   dblas::dcopy(size(), x, 1, ptr(), inc());
+  //   return *this;
+  // }
+
+#endif
+
 }

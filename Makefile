@@ -4,12 +4,7 @@ CXX = g++
 CXXFLAGS = --std=c++11 -fPIC -g -Wall -I marlib/include -DF77BLAS -DF77LAPACK
 LDFLAGS = -lblas -llapack
 
-OBJS = marlib/src/vector.o \
-	marlib/src/vector_ptr.o \
-	marlib/src/dense_matrix.o \
-	marlib/src/csr_matrix.o \
-	marlib/src/cppblas.o \
-	marlib/src/poisson.o \
+OBJS = marlib/src/poisson.o \
 	marlib/src/mexp_pade.o \
 	marlib/src/mexp_unif.o \
 	marlib/src/mexpint_unif.o \
