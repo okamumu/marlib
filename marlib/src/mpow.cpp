@@ -15,7 +15,6 @@ namespace marlib {
     dense_matrix<ValueT,RangeT> MX = dense_matrix<ValueT,RangeT>::eye(n);
     dense_matrix<ValueT,RangeT> MT(n,n);
 
-    int info = 0;
     if (m < 0) {
       MT = MA;
       if (trans == Trans) {
